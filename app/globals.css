@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  /* Infusio brand colors */
+  --color-olive: #5c6b3c;
+  --color-terracotta: #c4735b;
+  --color-tan: #d4b896;
+  --color-cream: #f5f0e8;
+  --color-brown: #3e2c1c;
+
+  /* Semantic tokens */
+  --color-surface: var(--color-cream);
+  --color-surface-alt: var(--color-tan);
+  --color-primary: var(--color-olive);
+  --color-accent: var(--color-terracotta);
+  --color-text: var(--color-brown);
+  --color-text-light: var(--color-cream);
+}
+
+/* Global resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility for Carevo font (to be loaded later) */
+.font-brand {
+  font-family: var(--font-brand, Georgia), serif;
+  font-weight: 400;
+}
