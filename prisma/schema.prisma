@@ -17,7 +17,7 @@ enum PaymentStatus {
 }
 
 model PaymentOrder {
-  id               String        @id @default(cuid())
+  id               Int           @id @default(autoincrement())
   mercadoPagoId    String?       @map("mercado_pago_id")
   sellerAppOrderId String        @map("seller_app_order_id")
   sellerAppId      String        @map("seller_app_id")

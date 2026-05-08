@@ -21,8 +21,25 @@ function mapMercadoPagoStatus(mpStatus: string): PaymentStatus | null {
  * Receives payment notifications from Mercado Pago.
  * Does NOT use API key — validated by Mercado Pago's signature mechanism.
  */
+function extractPaymentId(body: unknown, url: URL): string | null {
+  const bodyDataId =
+    typeof body === "object" &&
+    body !== null &&
+    "data" in body &&
+    typeof (body as Record<string, unknown>).data === "object" &&
+    (body as Record<string, unknown>).data !== null
+      ? ((body as Record<string, Record<string, unknown>>).data.id as string | undefined)
+      : undefined;
+
+  return (
+    bodyDataId ??
+    url.searchParams.get("data.id") ??
+    url.searchParams.get("id")
+  );
+}
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  let body: any;
+  let body: unknown;
   try {
     body = await request.json();
   } catch {
@@ -34,7 +51,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   // Mercado Pago can send the ID in the body or in the search params depending on the notification type
   const url = new URL(request.url);
-  const paymentId = body?.data?.id || url.searchParams.get("data.id") || url.searchParams.get("id");
+  const paymentId = extractPaymentId(body, url);
 
   if (!paymentId) {
     // Acknowledge other types of webhooks (e.g., test webhooks or non-payment events)
@@ -64,7 +81,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     // Find our payment order using the external_reference we passed when creating the preference
     const paymentOrder = await prisma.paymentOrder.findUnique({
-      where: { id: mpPayment.external_reference },
+      where: { id: parseInt(mpPayment.external_reference, 10) },
     });
 
     if (paymentOrder) {

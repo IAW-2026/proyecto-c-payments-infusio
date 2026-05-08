@@ -85,13 +85,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       body: {
         items: [
           {
-            id: paymentOrder.id,
+            id: paymentOrder.id.toString(),
             title: `Order #${body.seller_app_order_id}`,
             quantity: 1,
             unit_price: body.amount,
           },
         ],
-        external_reference: paymentOrder.id,
+        external_reference: paymentOrder.id.toString(),
         // @ts-expect-error mercadopago v2 SDK typings expect snake_case, but the runtime requires camelCase
         backUrls: {
           success: `${baseUrl}/payments/result`,

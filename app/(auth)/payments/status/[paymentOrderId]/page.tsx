@@ -13,7 +13,7 @@ export default async function PaymentStatusPage({
   const { paymentOrderId } = await params;
 
   const payment = await prisma.paymentOrder.findUnique({
-    where: { id: paymentOrderId },
+    where: { id: parseInt(paymentOrderId, 10) },
   });
 
   if (!payment) {
@@ -37,7 +37,7 @@ export default async function PaymentStatusPage({
         <div className="flex justify-between items-center pb-4 border-b border-tan/20">
           <span className="text-sm text-brown/60">Payment Order ID</span>
           <span className="text-sm font-mono text-brown">
-            {payment.id.slice(0, 12)}...
+            #{payment.id}
           </span>
         </div>
         <div className="flex justify-between items-center pb-4 border-b border-tan/20">

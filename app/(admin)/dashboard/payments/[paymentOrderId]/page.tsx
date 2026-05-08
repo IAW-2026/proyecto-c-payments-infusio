@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { PaymentStatusSelector } from "./status-selector";
 
 type PaymentDetailPageProps = {
   params: Promise<{ paymentOrderId: string }>;
@@ -14,18 +15,12 @@ export default async function PaymentDetailPage({
   const { paymentOrderId } = await params;
 
   const payment = await prisma.paymentOrder.findUnique({
-    where: { id: paymentOrderId },
+    where: { id: parseInt(paymentOrderId, 10) },
   });
 
   if (!payment) {
     notFound();
   }
-
-  const statusStyles: Record<string, string> = {
-    pending: "bg-tan/30 text-brown",
-    accepted: "bg-olive/10 text-olive",
-    cancelled: "bg-red-50 text-red-600",
-  };
 
   return (
     <div>
@@ -43,17 +38,13 @@ export default async function PaymentDetailPage({
         </Link>
         <span>/</span>
         <span className="text-brown font-mono">
-          {payment.id.slice(0, 12)}...
+          #{payment.id}
         </span>
       </nav>
 
       <div className="flex items-center gap-4 mb-8">
         <h1 className="text-2xl font-semibold text-brown">Payment Detail</h1>
-        <span
-          className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${statusStyles[payment.status] ?? statusStyles.pending}`}
-        >
-          {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
-        </span>
+        <PaymentStatusSelector paymentId={payment.id} currentStatus={payment.status} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -63,7 +54,7 @@ export default async function PaymentDetailPage({
             Order Information
           </h2>
           <dl className="space-y-4">
-            <DetailRow label="Payment Order ID" value={payment.id} mono />
+            <DetailRow label="Payment Order ID" value={payment.id.toString()} mono />
             <DetailRow
               label="Mercado Pago ID"
               value={payment.mercadoPagoId ?? "—"}

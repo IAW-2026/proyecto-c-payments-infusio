@@ -11,7 +11,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
   const { paymentOrderId } = await params;
 
   const payment = await prisma.paymentOrder.findUnique({
-    where: { id: paymentOrderId },
+    where: { id: parseInt(paymentOrderId, 10) },
   });
 
   if (!payment) {
@@ -38,7 +38,7 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
           <div className="flex justify-between items-center pb-4 border-b border-tan/20">
             <span className="text-sm text-brown/60">Payment Order</span>
             <span className="text-sm font-mono text-brown">
-              {payment.id.slice(0, 12)}...
+              #{payment.id}
             </span>
           </div>
           <div className="flex justify-between items-center pb-4 border-b border-tan/20">
@@ -60,21 +60,12 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
 
         {payment.status === "pending" ? (
           <>
-            {payment.checkoutUrl ? (
-              <a
-                href={payment.checkoutUrl}
-                className="mt-8 block w-full py-3.5 bg-[#009EE3] text-white text-center rounded-full font-medium text-sm hover:bg-[#008ACB] transition-colors"
-              >
-                Pay with Mercado Pago
-              </a>
-            ) : (
-              <button
-                disabled
-                className="mt-8 w-full py-3.5 bg-olive text-cream rounded-full font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Preparing payment...
-              </button>
-            )}
+            <button
+              disabled
+              className="mt-8 w-full py-3.5 bg-olive text-cream rounded-full font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Please use the checkout link provided to your app.
+            </button>
           </>
         ) : (
           <div className="mt-8 text-center text-sm text-brown/60">

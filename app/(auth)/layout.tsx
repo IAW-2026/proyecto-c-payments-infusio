@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: Readonly<{ children: React.Reac
             <UserButton />
           </Show>
           <Show when="signed-out">
-            <SignInButton>
+            <SignInButton fallbackRedirectUrl="/redirect">
               <button className="px-4 py-2 text-sm font-medium text-cream bg-olive rounded-full hover:bg-olive/90 transition-colors cursor-pointer">
                 Sign In
               </button>

@@ -72,7 +72,7 @@ export default async function DashboardOverviewPage() {
               >
                 <div className="flex items-center gap-4">
                   <span className="text-xs font-mono text-brown/50">
-                    {payment.id.slice(0, 8)}...
+                    #{payment.id}
                   </span>
                   <span className="text-sm text-brown">
                     ${payment.amount.toFixed(2)}

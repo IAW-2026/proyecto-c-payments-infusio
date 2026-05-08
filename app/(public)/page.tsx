@@ -9,29 +9,22 @@ export default function LandingPage() {
       number: "01",
       label: "PROCESS",
       title: "Secure checkout powered by Mercado Pago.",
-      cta: "LEARN MORE",
       bgColor: "bg-olive",
       textColor: "text-cream",
-      buttonStyle: "border-cream/40 text-cream/80 hover:bg-cream/10",
     },
     {
       number: "02",
       label: "TRACK",
       title: "Real-time payment status for buyers and sellers.",
-      cta: "VIEW DEMO",
       bgColor: "bg-terracotta",
       textColor: "text-cream",
-      buttonStyle: "border-cream/40 text-cream/80 hover:bg-cream/10",
     },
     {
       number: "03",
       label: "MANAGE",
       title: "Full dashboard for admins. Every transaction at a glance.",
-      cta: "DASHBOARD",
-      href: "/dashboard",
       bgColor: "bg-tan",
       textColor: "text-brown",
-      buttonStyle: "border-brown/40 text-brown/80 hover:bg-brown/10",
     },
   ];
 
@@ -72,14 +65,6 @@ export default function LandingPage() {
               <h2 className="mt-4 text-3xl sm:text-4xl font-brand leading-snug max-w-xl">
                 {feature.title}
               </h2>
-              <div className="mt-8">
-                <Link
-                  href={feature.href ?? "#"}
-                  className={`inline-block px-5 py-2.5 border rounded-full text-xs tracking-wider font-medium transition-colors ${feature.buttonStyle}`}
-                >
-                  {feature.cta}
-                </Link>
-              </div>
             </div>
           </div>
         ))}

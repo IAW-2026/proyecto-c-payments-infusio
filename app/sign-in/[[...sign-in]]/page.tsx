@@ -12,7 +12,7 @@ export default function SignInPage() {
         <p className="text-sm text-brown/60 mb-8">
           Sign in to continue
         </p>
-        <SignIn />
+        <SignIn fallbackRedirectUrl="/redirect" />
       </div>
     </div>
   );

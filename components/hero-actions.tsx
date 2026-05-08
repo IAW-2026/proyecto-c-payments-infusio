@@ -1,13 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { Show } from "@clerk/nextjs";
+import { Show, useUser } from "@clerk/nextjs";
 
 type HeroActionsProps = {
   className?: string;
 };
 
 function HeroActions({ className }: HeroActionsProps) {
+  const { user } = useUser();
+  const isAdmin = user?.publicMetadata?.role === "admin";
+  const dashboardHref = isAdmin ? "/dashboard" : "/my-payments";
+
   return (
     <div className={className}>
       <Show when="signed-out">
@@ -20,7 +24,7 @@ function HeroActions({ className }: HeroActionsProps) {
       </Show>
       <Show when="signed-in">
         <Link
-          href="/dashboard"
+          href={dashboardHref}
           className="px-6 py-3 bg-olive text-cream rounded-full text-sm font-medium hover:bg-olive/90 transition-colors"
         >
           Go to Dashboard

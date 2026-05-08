@@ -104,7 +104,7 @@ export default async function PaymentsListPage({
                       href={`/dashboard/payments/${payment.id}`}
                       className="hover:text-olive transition-colors"
                     >
-                      {payment.id.slice(0, 12)}...
+                      #{payment.id}
                     </Link>
                   </td>
                   <td className="px-6 py-4 text-sm text-brown/70">

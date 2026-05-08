@@ -22,7 +22,7 @@ export async function GET(
   const { paymentOrderId } = await context.params;
 
   const paymentOrder = await prisma.paymentOrder.findUnique({
-    where: { id: paymentOrderId },
+    where: { id: parseInt(paymentOrderId, 10) },
   });
 
   if (!paymentOrder) {
