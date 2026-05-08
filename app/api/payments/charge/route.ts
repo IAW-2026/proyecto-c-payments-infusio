@@ -73,7 +73,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   const baseUrl = request.nextUrl.origin;
 
-  let checkoutUrl = `${baseUrl}/checkout/${paymentOrder.id}`; // fallback
+  let checkoutUrl = `${baseUrl}/checkout/${paymentOrder.id}`;
 
   try {
     const client = new MercadoPagoConfig({
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           },
         ],
         external_reference: paymentOrder.id.toString(),
-        // @ts-expect-error mercadopago v2 SDK typings expect snake_case, but the runtime requires camelCase
+        // @ts-expect-error El SDK v2 de mercadopago pide snake_case (back_urls) en TypeScript, pero en ejecución necesita camelCase (backUrls)
         backUrls: {
           success: `${baseUrl}/payments/result`,
           failure: `${baseUrl}/payments/result`,
@@ -107,8 +107,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
   } catch (error) {
     console.error("Failed to create Mercado Pago preference:", error);
-    // Even if MP fails, we still return the fallback local checkout URL
-    // so the buyer can see the error or try again later.
   }
 
   return NextResponse.json(

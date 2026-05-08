@@ -5,8 +5,6 @@ type PaymentStatusPageProps = {
   params: Promise<{ paymentOrderId: string }>;
 };
 
-// Next.js requires default export for pages
-// eslint-disable-next-line import/no-default-export
 export default async function PaymentStatusPage({
   params,
 }: PaymentStatusPageProps) {

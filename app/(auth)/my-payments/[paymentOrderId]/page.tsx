@@ -7,8 +7,6 @@ type MyPaymentDetailPageProps = {
   params: Promise<{ paymentOrderId: string }>;
 };
 
-// Next.js requires default export for pages
-// eslint-disable-next-line import/no-default-export
 export default async function MyPaymentDetailPage({
   params,
 }: MyPaymentDetailPageProps) {
@@ -23,7 +21,6 @@ export default async function MyPaymentDetailPage({
     where: { id: parseInt(paymentOrderId, 10) },
   });
 
-  // Verify the payment exists AND belongs to the user
   if (!payment || payment.buyerId !== userId) {
     notFound();
   }

@@ -1,9 +1,14 @@
 import Link from "next/link";
+import { ClientRedirect } from "@/app/redirect/client-redirect";
+import { auth } from "@clerk/nextjs/server";
 import { HeroActions } from "@/components/hero-actions";
 
-// Next.js requires default export for pages
-// eslint-disable-next-line import/no-default-export
-export default function LandingPage() {
+export default async function LandingPage() {
+  const { userId } = await auth();
+  
+  if (userId) {
+    return <ClientRedirect url="/redirect" />;
+  }
   const features = [
     {
       number: "01",
@@ -30,9 +35,9 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col">
-      {/* Hero */}
+      
       <section className="relative flex flex-col items-center justify-center px-6 py-32 bg-brown text-cream text-center overflow-hidden">
-        {/* Decorative circles */}
+        
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-olive/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-terracotta/10 rounded-full blur-3xl" />
 
@@ -51,7 +56,7 @@ export default function LandingPage() {
         <HeroActions className="relative mt-10 flex gap-4" />
       </section>
 
-      {/* Features */}
+      
       <section id="features">
         {features.map((feature) => (
           <div
@@ -70,7 +75,7 @@ export default function LandingPage() {
         ))}
       </section>
 
-      {/* Footer */}
+      
       <footer className="bg-brown text-cream/50 px-6 py-12 text-center text-xs tracking-wide">
         <p>
           &copy; {new Date().getFullYear()} Infusio Payments. Part of the

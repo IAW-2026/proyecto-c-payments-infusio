@@ -1,7 +1,5 @@
 import { prisma } from "@/lib/prisma";
 
-// Next.js requires default export for pages
-// eslint-disable-next-line import/no-default-export
 export default async function DashboardOverviewPage() {
   const [total, approved, pending, revenue] = await Promise.all([
     prisma.paymentOrder.count(),

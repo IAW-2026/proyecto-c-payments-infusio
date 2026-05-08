@@ -1,7 +1,5 @@
 import { SignIn } from "@clerk/nextjs";
 
-// Next.js requires default export for pages
-// eslint-disable-next-line import/no-default-export
 export default function SignInPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-cream">

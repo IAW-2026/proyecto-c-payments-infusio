@@ -7,8 +7,6 @@ type PaymentDetailPageProps = {
   params: Promise<{ paymentOrderId: string }>;
 };
 
-// Next.js requires default export for pages
-// eslint-disable-next-line import/no-default-export
 export default async function PaymentDetailPage({
   params,
 }: PaymentDetailPageProps) {
@@ -24,7 +22,7 @@ export default async function PaymentDetailPage({
 
   return (
     <div>
-      {/* Breadcrumb */}
+      
       <nav className="flex items-center gap-2 text-sm text-brown/50 mb-6">
         <Link href="/dashboard" className="hover:text-olive transition-colors">
           Dashboard

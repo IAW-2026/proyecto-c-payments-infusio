@@ -8,8 +8,6 @@ type ResultPageProps = {
   }>;
 };
 
-// Next.js requires default export for pages
-// eslint-disable-next-line import/no-default-export
 export default async function PaymentResultPage({ searchParams }: ResultPageProps) {
   const { status, payment_order_id: paymentOrderId } = await searchParams;
 

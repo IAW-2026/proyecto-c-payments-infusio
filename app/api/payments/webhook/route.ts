@@ -49,12 +49,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // Mercado Pago can send the ID in the body or in the search params depending on the notification type
   const url = new URL(request.url);
   const paymentId = extractPaymentId(body, url);
 
   if (!paymentId) {
-    // Acknowledge other types of webhooks (e.g., test webhooks or non-payment events)
     return NextResponse.json({ ok: true });
   }
 
@@ -64,8 +62,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     });
     const paymentClient = new Payment(client);
     
-    // Securely fetch the real payment details from Mercado Pago
-    // This prevents malicious users from spoofing successful webhook requests
     const mpPayment = await paymentClient.get({ id: paymentId });
 
     if (!mpPayment || !mpPayment.status || !mpPayment.external_reference) {
@@ -79,7 +75,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ ok: true });
     }
 
-    // Find our payment order using the external_reference we passed when creating the preference
     const paymentOrder = await prisma.paymentOrder.findUnique({
       where: { id: parseInt(mpPayment.external_reference, 10) },
     });
@@ -94,7 +89,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       });
       console.log(`Payment ${paymentOrder.id} updated to ${mappedStatus} (MP ID: ${mpPayment.id})`);
 
-      // Notify Seller App
       const sellerAppUrl = process.env.SELLER_APP_URL;
       if (sellerAppUrl) {
         try {

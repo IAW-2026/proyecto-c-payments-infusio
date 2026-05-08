@@ -19,8 +19,6 @@ export const metadata: Metadata = {
     "Secure payment processing for the Infusio marketplace — teas, coffees, and accessories.",
 };
 
-// Next.js requires default export for layouts
-// eslint-disable-next-line import/no-default-export
 export default function RootLayout({
   children,
 }: Readonly<{

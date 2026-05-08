@@ -3,19 +3,16 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-// Next.js requires default export for layouts
-// eslint-disable-next-line import/no-default-export
 export default async function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // Second layer of defense: verify admin role server-side
   const { sessionClaims } = await auth();
   if (sessionClaims?.metadata?.role !== "admin") {
     redirect("/");
   }
 
   return (
-    <div className="flex min-h-full">
+    <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside className="w-64 bg-brown text-cream flex flex-col shrink-0">
         <div className="px-6 py-5 border-b border-cream/10">

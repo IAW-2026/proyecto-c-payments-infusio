@@ -1,10 +1,8 @@
 import { Show, UserButton, SignInButton } from "@clerk/nextjs";
 
-// Next.js requires default export for layouts
-// eslint-disable-next-line import/no-default-export
 export default function AuthLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="flex flex-col min-h-full">
+    <div className="flex flex-col min-h-screen">
       <header className="flex items-center justify-between px-6 py-4 border-b border-tan/50 bg-cream">
         <a href="/" className="font-brand text-2xl text-brown tracking-wide">
           Infusio <span className="text-olive font-semibold">Payments</span>
@@ -14,11 +12,9 @@ export default function AuthLayout({ children }: Readonly<{ children: React.Reac
             <UserButton />
           </Show>
           <Show when="signed-out">
-            <SignInButton fallbackRedirectUrl="/redirect">
-              <button className="px-4 py-2 text-sm font-medium text-cream bg-olive rounded-full hover:bg-olive/90 transition-colors cursor-pointer">
-                Sign In
-              </button>
-            </SignInButton>
+            <div className="px-4 py-2 text-sm font-medium text-cream bg-olive rounded-full hover:bg-olive/90 transition-colors cursor-pointer inline-block">
+              <SignInButton fallbackRedirectUrl="/redirect" mode="modal" />
+            </div>
           </Show>
         </div>
       </header>

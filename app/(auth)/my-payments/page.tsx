@@ -3,8 +3,6 @@ import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
-// Next.js requires default export for pages
-// eslint-disable-next-line import/no-default-export
 export default async function MyPaymentsPage() {
   const { userId } = await auth();
   if (!userId) {
