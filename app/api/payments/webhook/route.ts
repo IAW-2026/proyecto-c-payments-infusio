@@ -52,7 +52,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const url = new URL(request.url);
   const paymentId = extractPaymentId(body, url);
 
+  console.log("🔔 Webhook recibido! ID detectado:", paymentId);
+  console.log("📦 Body completo:", JSON.stringify(body, null, 2));
+
   if (!paymentId) {
+    console.log("⚠️ Webhook ignorado: No se encontró un ID de pago.");
     return NextResponse.json({ ok: true });
   }
 
