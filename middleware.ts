@@ -1,6 +1,12 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+const isPublicRoute = createRouteMatcher([
+  "/",
+  "/sign-in(.*)",
+  "/api/payments/webhook",
+]);
+
 const isAdminRoute = createRouteMatcher(["/dashboard(.*)"]);
 const isAuthRoute = createRouteMatcher([
   "/checkout(.*)",
@@ -9,6 +15,11 @@ const isAuthRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
+  // Public routes: no auth needed
+  if (isPublicRoute(req)) {
+    return NextResponse.next();
+  }
+
   const { userId, sessionClaims } = await auth();
 
   // Auth routes: require any authenticated user
