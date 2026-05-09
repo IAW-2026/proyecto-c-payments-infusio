@@ -99,6 +99,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           pending: `${baseUrl}/payments/result`,
         },
         autoReturn: "approved",
+        notification_url: `${baseUrl}/api/payments/webhook`,
       },
     });
 
