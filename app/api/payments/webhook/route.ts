@@ -24,10 +24,10 @@ function mapMercadoPagoStatus(mpStatus: string): PaymentStatus | null {
 function extractPaymentId(body: unknown, url: URL): string | null {
   const bodyDataId =
     typeof body === "object" &&
-    body !== null &&
-    "data" in body &&
-    typeof (body as Record<string, unknown>).data === "object" &&
-    (body as Record<string, unknown>).data !== null
+      body !== null &&
+      "data" in body &&
+      typeof (body as Record<string, unknown>).data === "object" &&
+      (body as Record<string, unknown>).data !== null
       ? ((body as Record<string, Record<string, unknown>>).data.id as string | undefined)
       : undefined;
 
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN || "",
     });
     const paymentClient = new Payment(client);
-    
+
     const mpPayment = await paymentClient.get({ id: paymentId });
 
     if (!mpPayment || !mpPayment.status || !mpPayment.external_reference) {
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (paymentOrder) {
       await prisma.paymentOrder.update({
         where: { id: paymentOrder.id },
-        data: { 
+        data: {
           status: mappedStatus,
           mercadoPagoId: mpPayment.id?.toString(),
         },
