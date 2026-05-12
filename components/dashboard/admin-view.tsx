@@ -7,6 +7,7 @@ import Link from "next/link";
 import { BarChart } from "@/components/ui/bar-chart";
 import { RankingList } from "@/components/ui/ranking-list";
 import { Pagination } from "@/components/ui/pagination";
+import { ExportButton } from "@/components/ui/export-button";
 
 const PAGE_SIZE = 10;
 
@@ -66,14 +67,19 @@ export async function AdminView({ page = 1 }: { page?: number }) {
 
   return (
     <div className="space-y-12">
-      <header>
-        <p className="text-xs tracking-[0.3em] text-terracotta italic mb-4 uppercase">
-          Administración Global
-        </p>
-        <h1 className="font-serif text-5xl text-brown mb-2">Panel Maestro</h1>
-        <p className="text-sm text-muted-foreground italic">
-          Resumen total de la red Infusio.
-        </p>
+      <header className="flex items-start justify-between">
+        <div>
+          <p className="text-xs tracking-[0.3em] text-terracotta italic mb-4 uppercase">
+            Administración Global
+          </p>
+          <h1 className="font-serif text-5xl text-brown mb-2">Panel Maestro</h1>
+          <p className="text-sm text-muted-foreground italic">
+            Resumen total de la red Infusio.
+          </p>
+        </div>
+        <div className="pt-8">
+          <ExportButton data={recentPayments} />
+        </div>
       </header>
 
       {/* Stats Grid */}
