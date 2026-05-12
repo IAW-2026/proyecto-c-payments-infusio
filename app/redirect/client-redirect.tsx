@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import GlobalLoading from "@/app/loading";
 
 export function ClientRedirect({ url }: { url: string }) {
-  useEffect(() => {
-    window.location.replace(url);
-  }, [url]);
+  const router = useRouter();
 
-  return <div className="flex h-screen w-full bg-cream" />;
+  useEffect(() => {
+    router.replace(url);
+  }, [url, router]);
+
+  return <GlobalLoading />;
 }
