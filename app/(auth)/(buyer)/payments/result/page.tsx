@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SuccessConfetti } from "@/components/ui/success-confetti";
 
 type ResultPageProps = {
   searchParams: Promise<{
@@ -57,6 +58,8 @@ export default async function PaymentResultPage({ searchParams }: ResultPageProp
       </h1>
       <p className="text-brown/60 leading-relaxed mb-8">{config.description}</p>
 
+      {status === "approved" && <SuccessConfetti />}
+      
       {paymentOrderId && (
         <p className="text-xs text-brown/40 mb-6">
           Payment Order:{" "}
