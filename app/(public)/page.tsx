@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Image from "next/image";
 import { ClientRedirect } from "@/app/redirect/client-redirect";
 import { auth } from "@clerk/nextjs/server";
 import { HeroActions } from "@/components/hero-actions";
@@ -9,25 +9,26 @@ export default async function LandingPage() {
   if (userId) {
     return <ClientRedirect url="/redirect" />;
   }
+
   const features = [
     {
       number: "01",
-      label: "PROCESS",
-      title: "Secure checkout powered by Mercado Pago.",
+      label: "PROCESO",
+      title: "Pagos seguros potenciados por Mercado Pago.",
       bgColor: "bg-olive",
       textColor: "text-cream",
     },
     {
       number: "02",
-      label: "TRACK",
-      title: "Real-time payment status for buyers and sellers.",
+      label: "SEGUIMIENTO",
+      title: "Estado del pago en tiempo real para compradores y vendedores.",
       bgColor: "bg-terracotta",
       textColor: "text-cream",
     },
     {
       number: "03",
-      label: "MANAGE",
-      title: "Full dashboard for admins. Every transaction at a glance.",
+      label: "GESTIÓN",
+      title: "Panel completo para administradores. Cada transacción a la vista.",
       bgColor: "bg-tan",
       textColor: "text-brown",
     },
@@ -35,55 +36,64 @@ export default async function LandingPage() {
 
   return (
     <div className="flex flex-col">
-      
-      <section className="relative flex flex-col items-center justify-center px-6 py-32 bg-brown text-cream text-center overflow-hidden">
-        
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-olive/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-terracotta/10 rounded-full blur-3xl" />
+      {/* Hero Section */}
+      <section className="relative flex flex-col items-center justify-center px-6 py-32 sm:py-48 text-center overflow-hidden min-h-[80vh]">
+        {/* Background Image */}
+        <Image
+          src="/infusio_hero_background_1778540230135.png"
+          alt="Infusio Hero"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-brown/60 backdrop-blur-[2px]" />
 
-        <p className="relative text-xs uppercase tracking-[0.3em] text-cream/60 mb-6">
-          Infusio Marketplace
-        </p>
-        <h1 className="relative font-brand text-5xl sm:text-7xl leading-tight tracking-tight max-w-3xl">
-          Payment
-          <br />
-          Processing
-        </h1>
-        <p className="relative mt-6 text-lg text-cream/70 max-w-lg leading-relaxed">
-          The secure payment layer for the Infusio ecosystem. From checkout to
-          confirmation, handled with care.
-        </p>
-        <HeroActions className="relative mt-10 flex gap-4" />
+        <div className="relative z-10 flex flex-col items-center">
+          <p className="text-xs uppercase tracking-[0.4em] text-cream/80 mb-8 italic">
+            Infusio Marketplace
+          </p>
+          <h1 className="font-serif text-5xl sm:text-8xl text-cream leading-tight tracking-tight max-w-4xl">
+            Procesamiento
+            <br />
+            <span className="italic font-normal">de Pagos</span>
+          </h1>
+          <p className="mt-8 text-lg sm:text-xl text-cream/80 max-w-xl leading-relaxed font-light">
+            La capa de seguridad para el ecosistema de Infusio. Desde el checkout hasta 
+            la confirmación, manejado con arte y precisión.
+          </p>
+          <HeroActions className="mt-12 flex gap-6" />
+        </div>
       </section>
 
-      
-      <section id="features">
+      {/* Features Section */}
+      <section id="features" className="grid grid-cols-1 md:grid-cols-3">
         {features.map((feature) => (
           <div
             key={feature.number}
-            className={`${feature.bgColor} ${feature.textColor} px-6 py-20 sm:px-12 lg:px-24`}
+            className={`${feature.bgColor} ${feature.textColor} px-8 py-24 sm:px-12 flex flex-col justify-between border-r border-brown/5 last:border-r-0`}
           >
-            <div className="max-w-4xl mx-auto">
-              <span className="text-xs tracking-[0.2em] opacity-60">
+            <div>
+              <span className="text-[10px] tracking-[0.3em] font-medium opacity-60 uppercase">
                 {feature.number} — {feature.label}
               </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-brand leading-snug max-w-xl">
+              <h2 className="mt-6 text-3xl font-serif leading-tight">
                 {feature.title}
               </h2>
             </div>
+            <div className="mt-12 w-12 h-[1px] bg-current opacity-30" />
           </div>
         ))}
       </section>
 
-      
-      <footer className="bg-brown text-cream/50 px-6 py-12 text-center text-xs tracking-wide">
+      {/* Footer */}
+      <footer className="bg-brown text-tan/40 px-6 py-16 text-center text-[10px] tracking-[0.2em] uppercase">
         <p>
-          &copy; {new Date().getFullYear()} Infusio Payments. Part of the
-          Infusio Marketplace.
+          &copy; {new Date().getFullYear()} Infusio Payments. 
+          <br className="sm:hidden" /> 
+          Parte del Marketplace de Infusio.
         </p>
       </footer>
     </div>
   );
 }
-
-

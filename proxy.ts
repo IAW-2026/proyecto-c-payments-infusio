@@ -7,33 +7,19 @@ const isPublicRoute = createRouteMatcher([
   "/api/payments/webhook",
 ]);
 
-const isAdminRoute = createRouteMatcher(["/dashboard(.*)"]);
-const isAuthRoute = createRouteMatcher([
-  "/checkout(.*)",
-  "/payments/result",
-  "/payments/status(.*)",
-]);
+const isProtectedDashboardRoute = createRouteMatcher(["/dashboard(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
-  // Public routes: no auth needed
-  if (isPublicRoute(req)) {
-    return NextResponse.next();
-  }
+  if (isPublicRoute(req)) return NextResponse.next();
 
   const { userId, sessionClaims } = await auth();
+  const role = sessionClaims?.metadata?.role;
 
-  // Auth routes: require any authenticated user
-  if (isAuthRoute(req) && !userId) {
-    return NextResponse.redirect(new URL("/sign-in", req.url));
-  }
-
-  // Admin routes: require authenticated user with admin role
-  if (isAdminRoute(req)) {
-    if (!userId) {
-      return NextResponse.redirect(new URL("/sign-in", req.url));
-    }
-
-    if (sessionClaims?.metadata?.role !== "admin") {
+  if (isProtectedDashboardRoute(req)) {
+    if (!userId) return NextResponse.redirect(new URL("/sign-in", req.url));
+    
+    // Allow admin and seller to access /dashboard
+    if (role !== "admin" && role !== "seller") {
       return NextResponse.redirect(new URL("/", req.url));
     }
   }

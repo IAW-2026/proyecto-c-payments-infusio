@@ -9,32 +9,33 @@ type HeroActionsProps = {
 
 function HeroActions({ className }: HeroActionsProps) {
   const { user } = useUser();
-  const isAdmin = user?.publicMetadata?.role === "admin";
-  const dashboardHref = isAdmin ? "/dashboard" : "/my-payments";
+  const role = user?.publicMetadata?.role;
+  const hasDashboardAccess = role === "admin" || role === "seller";
+  const dashboardHref = hasDashboardAccess ? "/dashboard" : "/my-payments";
 
   return (
     <div className={className}>
       <Show when="signed-out">
         <Link
           href="/sign-in"
-          className="px-6 py-3 bg-olive text-cream rounded-full text-sm font-medium hover:bg-olive/90 transition-colors"
+          className="px-8 py-4 bg-terracotta text-cream rounded-full text-sm font-medium hover:brightness-110 transition-all shadow-lg shadow-terracotta/20"
         >
-          Get Started
+          Comenzar ahora
         </Link>
       </Show>
       <Show when="signed-in">
         <Link
           href={dashboardHref}
-          className="px-6 py-3 bg-olive text-cream rounded-full text-sm font-medium hover:bg-olive/90 transition-colors"
+          className="px-8 py-4 bg-terracotta text-cream rounded-full text-sm font-medium hover:brightness-110 transition-all shadow-lg shadow-terracotta/20"
         >
-          Go to Dashboard
+          Ir al Panel
         </Link>
       </Show>
       <a
         href="#features"
-        className="px-6 py-3 border border-cream/20 text-cream/80 rounded-full text-sm font-medium hover:bg-cream/5 transition-colors"
+        className="px-8 py-4 border border-cream/30 text-cream rounded-full text-sm font-medium hover:bg-cream/10 transition-all backdrop-blur-sm"
       >
-        Learn More
+        Conocer más
       </a>
     </div>
   );

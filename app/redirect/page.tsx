@@ -1,14 +1,17 @@
 import { ClientRedirect } from "./client-redirect";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 
 export default async function RedirectPage() {
-  const { sessionClaims, userId } = await auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return <ClientRedirect url="/sign-in" />;
   }
 
-  if (sessionClaims?.metadata?.role === "admin") {
+  const user = await currentUser();
+  const role = user?.publicMetadata?.role;
+
+  if (role === "admin" || role === "seller") {
     return <ClientRedirect url="/dashboard" />;
   }
 
