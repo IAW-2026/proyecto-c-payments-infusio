@@ -1,0 +1,25 @@
+import { Show, UserButton, SignInButton } from "@clerk/nextjs";
+import { Logo } from "@/components/ui/logo";
+
+export default function AuthLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-tan/50 bg-cream">
+        <Logo />
+        <div className="flex items-center gap-4">
+          <Show when="signed-in">
+            <UserButton />
+          </Show>
+          <Show when="signed-out">
+            <button className="px-4 py-2 text-sm font-medium text-cream bg-olive rounded-full hover:bg-olive/90 transition-colors cursor-pointer inline-block" type="button">
+              <SignInButton fallbackRedirectUrl="/redirect" mode="modal" />
+            </button>
+          </Show>
+        </div>
+      </header>
+      <main className="flex-1 bg-cream">{children}</main>
+    </div>
+  );
+}
+
+

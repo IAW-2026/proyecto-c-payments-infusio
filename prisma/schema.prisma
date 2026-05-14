@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PaymentStatus {
+  pending
+  accepted
+  cancelled
+}
+
+model PaymentOrder {
+  id               Int           @id @default(autoincrement())
+  mercadoPagoId    String?       @map("mercado_pago_id")
+  sellerAppOrderId String        @unique @map("seller_app_order_id")
+  buyerId          String        @map("buyer_id")
+  amount           Float
+  status           PaymentStatus @default(pending)
+  createdAt        DateTime      @default(now()) @map("created_at")
+  updatedAt        DateTime      @updatedAt @map("updated_at")
+
+  @@map("payment_order")
+}
