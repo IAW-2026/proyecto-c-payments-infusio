@@ -104,16 +104,17 @@ export async function AdminView({ page = 1 }: { page?: number }) {
         <div className="bg-card rounded-3xl border border-tan overflow-hidden shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
+              <caption className="sr-only">Lista de pagos recientes en el sistema</caption>
               <thead>
                 <tr className="bg-muted/30 border-b border-tan/30">
-                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">ID Interno</th>
-                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">MP Payment ID</th>
-                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Nº Orden</th>
-                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Monto</th>
-                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Comprador</th>
-                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Fecha / Hora</th>
-                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Estado</th>
-                  <th className="px-6 py-4"></th>
+                  <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">ID Interno</th>
+                  <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">MP Payment ID</th>
+                  <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Nº Orden</th>
+                  <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Monto</th>
+                  <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Comprador</th>
+                  <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Fecha / Hora</th>
+                  <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Estado</th>
+                  <th scope="col" className="px-6 py-4"><span className="sr-only">Acciones</span></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-tan/20">

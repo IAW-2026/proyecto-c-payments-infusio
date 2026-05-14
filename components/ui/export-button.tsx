@@ -53,7 +53,7 @@ export function ExportButton({ data }: { data: PaymentData[] }) {
       onClick={handleExport}
       className="flex items-center gap-2 px-4 py-2 bg-olive text-cream rounded-full text-xs font-medium hover:bg-olive/90 transition-colors shadow-sm"
     >
-      <Download size={14} />
+      <Download size={14} aria-hidden="true" />
       Exportar CSV
     </button>
   );

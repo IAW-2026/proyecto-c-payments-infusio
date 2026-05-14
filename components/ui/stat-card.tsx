@@ -13,32 +13,36 @@ interface StatCardProps {
 
 export function StatCard({ label, value, icon: Icon, trend }: StatCardProps) {
   return (
-    <div className="bg-card p-6 rounded-3xl border border-tan shadow-sm hover:shadow-md transition-shadow">
+    <article 
+      className="bg-card p-6 rounded-3xl border border-tan shadow-sm hover:shadow-md transition-shadow"
+      aria-label={`Estadística: ${label}`}
+    >
       <div className="flex items-center justify-between mb-4">
-        <span className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium">
+        <h3 className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium">
           {label}
-        </span>
-        {Icon && <Icon className="w-5 h-5 text-olive opacity-60" />}
+        </h3>
+        {Icon && <Icon className="w-5 h-5 text-olive opacity-60" aria-hidden="true" />}
       </div>
       <div className="flex items-baseline gap-2">
         <span className="text-3xl font-serif text-brown">{value}</span>
       </div>
       {trend && (
-        <div className="mt-4 flex items-center gap-1.5">
+        <div className="mt-4 flex items-center gap-1.5" aria-label={`Tendencia: ${trend.isPositive ? 'Subió' : 'Bajó'} un ${Math.abs(trend.value)}% ${trend.label}`}>
           <span
             className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
               trend.isPositive
                 ? "bg-olive/10 text-olive"
                 : "bg-terracotta/10 text-terracotta"
             }`}
+            aria-hidden="true"
           >
             {trend.isPositive ? "+" : "-"}{Math.abs(trend.value)}%
           </span>
-          <span className="text-[10px] text-muted-foreground italic">
+          <span className="text-[10px] text-muted-foreground italic" aria-hidden="true">
             {trend.label}
           </span>
         </div>
       )}
-    </div>
+    </article>
   );
 }

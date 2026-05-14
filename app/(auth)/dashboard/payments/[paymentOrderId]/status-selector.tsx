@@ -54,6 +54,7 @@ export function PaymentStatusSelector({ paymentId, currentStatus }: PaymentStatu
         value={status}
         onChange={(e) => handleStatusChange(e.target.value)}
         disabled={isLoading}
+        aria-label="Cambiar estado de la orden"
         className={`px-3 py-1.5 rounded-full text-xs font-medium outline-none appearance-none cursor-pointer border border-transparent hover:border-tan/30 transition-colors ${statusStyles[status] ?? statusStyles.pending}`}
       >
         <option value="pending">Pending</option>

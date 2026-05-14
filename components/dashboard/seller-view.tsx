@@ -111,14 +111,15 @@ export async function SellerView({ sellerId, page = 1 }: SellerViewProps) {
       <div className="bg-card rounded-3xl border border-tan overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
+              <caption className="sr-only">Historial de órdenes recibidas</caption>
             <thead>
               <tr className="bg-muted/30 border-b border-tan/30">
-                <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">ID Interno</th>
-                <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Nº Orden</th>
-                <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Monto</th>
-                <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Comprador</th>
-                <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Fecha / Hora</th>
-                <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Estado</th>
+                <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">ID Interno</th>
+                <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Nº Orden</th>
+                <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Monto</th>
+                <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Comprador</th>
+                <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Fecha / Hora</th>
+                <th scope="col" className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Estado</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-tan/20">

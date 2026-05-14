@@ -22,7 +22,7 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-2 mt-8">
+    <nav aria-label="Paginación" className="flex items-center justify-center gap-2 mt-8">
       <Link
         href={createPageURL(currentPage - 1)}
         className={`p-2 rounded-full border border-tan transition-colors ${
@@ -30,8 +30,9 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
             ? "opacity-30 pointer-events-none"
             : "hover:bg-tan/20 text-brown"
         }`}
+        aria-label="Página anterior"
       >
-        <ChevronLeft className="w-4 h-4" />
+        <ChevronLeft className="w-4 h-4" aria-hidden="true" />
       </Link>
 
       <div className="flex items-center gap-1">
@@ -47,6 +48,8 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
                   ? "bg-brown text-cream shadow-md scale-110"
                   : "text-muted-foreground hover:text-brown hover:bg-tan/10"
               }`}
+              aria-label={`Página ${page}`}
+              aria-current={isCurrent ? "page" : undefined}
             >
               {page}
             </Link>
@@ -61,9 +64,10 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
             ? "opacity-30 pointer-events-none"
             : "hover:bg-tan/20 text-brown"
         }`}
+        aria-label="Página siguiente"
       >
-        <ChevronRight className="w-4 h-4" />
+        <ChevronRight className="w-4 h-4" aria-hidden="true" />
       </Link>
-    </div>
+    </nav>
   );
 }
