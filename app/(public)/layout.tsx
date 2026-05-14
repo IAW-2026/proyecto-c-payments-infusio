@@ -8,9 +8,9 @@ export default function PublicLayout({ children }: Readonly<{ children: React.Re
         <Logo />
         <nav className="flex items-center gap-4">
           <Show when="signed-out">
-            <div className="px-4 py-2 text-sm font-medium text-brown border border-brown/20 rounded-full hover:bg-brown/5 transition-colors cursor-pointer inline-block">
+            <button className="px-4 py-2 text-sm font-medium text-brown border border-brown/20 rounded-full hover:bg-brown/5 transition-colors cursor-pointer inline-block" type="button">
               <SignInButton fallbackRedirectUrl="/redirect" mode="modal" />
-            </div>
+            </button>
           </Show>
           <Show when="signed-in">
             <UserButton />

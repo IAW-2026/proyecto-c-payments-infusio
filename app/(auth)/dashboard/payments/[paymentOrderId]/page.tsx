@@ -71,7 +71,6 @@ export default async function PaymentDetailPage({
             value={payment.mercadoPagoId ?? "—"}
             mono
           />
-          <DetailRow label="App origen" value={payment.sellerAppId} />
           <DetailRow
             label="Nº Orden"
             value={payment.sellerAppOrderId}
@@ -84,8 +83,7 @@ export default async function PaymentDetailPage({
           <h2 className="text-xs tracking-widest text-muted-foreground uppercase font-medium">
             Datos del Pago
           </h2>
-          <DetailRow label="Buyer App ID" value={payment.buyerAppId} />
-          <DetailRow label="Buyer ID" value={payment.buyerId} mono />
+          <DetailRow label="Comprador" value={payment.buyerId} mono />
           <DetailRow
             label="Monto"
             value={`$${payment.amount.toFixed(2)}`}

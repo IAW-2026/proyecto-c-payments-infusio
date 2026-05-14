@@ -4,9 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { MercadoPagoConfig, Preference } from "mercadopago";
 
 type ChargeRequestBody = {
-  seller_app_id: string;
   seller_app_order_id: string;
-  buyer_app_id: string;
   buyer_id: string;
   amount: number;
 };
@@ -15,9 +13,7 @@ function isValidChargeBody(body: unknown): body is ChargeRequestBody {
   if (typeof body !== "object" || body === null) return false;
   const b = body as Record<string, unknown>;
   return (
-    typeof b.seller_app_id === "string" &&
     typeof b.seller_app_order_id === "string" &&
-    typeof b.buyer_app_id === "string" &&
     typeof b.buyer_id === "string" &&
     typeof b.amount === "number" &&
     b.amount > 0
@@ -49,9 +45,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       {
         error: "Missing or invalid fields",
         required: {
-          seller_app_id: "string",
           seller_app_order_id: "string",
-          buyer_app_id: "string",
           buyer_id: "string",
           amount: "number > 0",
         },
@@ -60,11 +54,26 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
+  // Idempotency: if a PaymentOrder already exists for this order ID, return it
+  const existingOrder = await prisma.paymentOrder.findUnique({
+    where: { sellerAppOrderId: body.seller_app_order_id },
+  });
+
+  if (existingOrder) {
+    const baseUrlExisting = request.nextUrl.origin;
+    return NextResponse.json(
+      {
+        payment_order_id: existingOrder.id,
+        checkout_url: `${baseUrlExisting}/checkout/${existingOrder.id}`,
+        existing: true,
+      },
+      { status: 200 }
+    );
+  }
+
   const paymentOrder = await prisma.paymentOrder.create({
     data: {
-      sellerAppId: body.seller_app_id,
       sellerAppOrderId: body.seller_app_order_id,
-      buyerAppId: body.buyer_app_id,
       buyerId: body.buyer_id,
       amount: body.amount,
       status: "pending",

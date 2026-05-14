@@ -11,9 +11,9 @@ export default function AuthLayout({ children }: Readonly<{ children: React.Reac
             <UserButton />
           </Show>
           <Show when="signed-out">
-            <div className="px-4 py-2 text-sm font-medium text-cream bg-olive rounded-full hover:bg-olive/90 transition-colors cursor-pointer inline-block">
+            <button className="px-4 py-2 text-sm font-medium text-cream bg-olive rounded-full hover:bg-olive/90 transition-colors cursor-pointer inline-block" type="button">
               <SignInButton fallbackRedirectUrl="/redirect" mode="modal" />
-            </div>
+            </button>
           </Show>
         </div>
       </header>

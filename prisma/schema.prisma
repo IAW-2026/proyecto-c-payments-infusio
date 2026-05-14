@@ -19,15 +19,12 @@ enum PaymentStatus {
 model PaymentOrder {
   id               Int           @id @default(autoincrement())
   mercadoPagoId    String?       @map("mercado_pago_id")
-  sellerAppOrderId String        @map("seller_app_order_id")
-  sellerAppId      String        @map("seller_app_id")
-  buyerAppId       String        @map("buyer_app_id")
+  sellerAppOrderId String        @unique @map("seller_app_order_id")
   buyerId          String        @map("buyer_id")
   amount           Float
   status           PaymentStatus @default(pending)
   createdAt        DateTime      @default(now()) @map("created_at")
   updatedAt        DateTime      @updatedAt @map("updated_at")
 
-  @@unique([sellerAppId, sellerAppOrderId])
   @@map("payment_order")
 }

@@ -18,8 +18,8 @@ export default clerkMiddleware(async (auth, req) => {
   if (isProtectedDashboardRoute(req)) {
     if (!userId) return NextResponse.redirect(new URL("/sign-in", req.url));
     
-    // Allow admin and seller to access /dashboard
-    if (role !== "admin" && role !== "seller") {
+    // Only admin can access /dashboard
+    if (role !== "admin") {
       return NextResponse.redirect(new URL("/", req.url));
     }
   }
