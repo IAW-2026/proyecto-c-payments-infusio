@@ -36,7 +36,7 @@ export async function SellerView({ sellerId, page = 1 }: SellerViewProps) {
   const totalRevenue = allPaymentsForStats
     .filter((p) => p.status === "accepted")
     .reduce((acc, p) => acc + p.amount, 0);
-  
+
   const totalOrders = totalCount;
   const approvedOrders = allPaymentsForStats.filter((p) => p.status === "accepted").length;
   const conversionRate = totalOrders > 0 ? Math.round((approvedOrders / totalOrders) * 100) : 0;
@@ -47,11 +47,11 @@ export async function SellerView({ sellerId, page = 1 }: SellerViewProps) {
     d.setDate(d.getDate() - (6 - i));
     const label = d.toLocaleDateString("es-AR", { weekday: "short" });
     const dateStr = d.toLocaleDateString("en-CA");
-    
+
     const value = allPaymentsForStats
       .filter((p) => p.status === "accepted" && p.createdAt.toLocaleDateString("en-CA") === dateStr)
       .reduce((acc, p) => acc + p.amount, 0);
-    
+
     return { label, value };
   });
 
@@ -63,11 +63,11 @@ export async function SellerView({ sellerId, page = 1 }: SellerViewProps) {
     const m = d.getMonth();
     const y = d.getFullYear();
     const label = monthNames[m];
-    
+
     const spent = allPaymentsForStats
       .filter((p) => p.status === "accepted" && p.createdAt.getMonth() === m && p.createdAt.getFullYear() === y)
       .reduce((acc, p) => acc + p.amount, 0);
-      
+
     return { label, value: spent };
   });
 

@@ -5,7 +5,6 @@ import { Banknote, TrendingUp, ShoppingBag, BarChart3 } from "lucide-react";
 import Link from "next/link";
 
 import { BarChart } from "@/components/ui/bar-chart";
-import { RankingList } from "@/components/ui/ranking-list";
 import { Pagination } from "@/components/ui/pagination";
 import { ExportButton } from "@/components/ui/export-button";
 
@@ -30,7 +29,7 @@ export async function AdminView({ page = 1 }: { page?: number }) {
     prisma.paymentOrder.count(),
     prisma.paymentOrder.findMany({
       where: { status: "accepted" },
-      select: { amount: true, createdAt: true, sellerAppId: true },
+      select: { amount: true, createdAt: true },
     }),
   ]);
 
@@ -54,16 +53,7 @@ export async function AdminView({ page = 1 }: { page?: number }) {
     return { label, value };
   });
 
-  // Top Sellers Ranking (by Revenue)
-  const sellerTotals: Record<string, number> = {};
-  allAcceptedPayments.forEach((p) => {
-    sellerTotals[p.sellerAppId] = (sellerTotals[p.sellerAppId] || 0) + p.amount;
-  });
 
-  const topSellersData = Object.entries(sellerTotals)
-    .map(([label, value]) => ({ label, value }))
-    .sort((a, b) => b.value - a.value)
-    .slice(0, 5); // Top 5 stores
 
   return (
     <div className="space-y-12">
@@ -107,10 +97,7 @@ export async function AdminView({ page = 1 }: { page?: number }) {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <BarChart label="Ingresos Globales (Últimos 6 meses)" data={monthlyRevenueData} color="accent" />
-        <RankingList title="Ranking de Tiendas (por Volumen)" data={topSellersData} />
-      </div>
+      <BarChart label="Ingresos Globales (Últimos 6 meses)" data={monthlyRevenueData} color="accent" />
 
       {/* Table Section */}
       <div className="space-y-6">
@@ -121,9 +108,8 @@ export async function AdminView({ page = 1 }: { page?: number }) {
                 <tr className="bg-muted/30 border-b border-tan/30">
                   <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">ID Interno</th>
                   <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">MP Payment ID</th>
-                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Ref. Tienda</th>
+                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Nº Orden</th>
                   <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Monto</th>
-                  <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Tienda</th>
                   <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Comprador</th>
                   <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Fecha / Hora</th>
                   <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Estado</th>
@@ -145,9 +131,6 @@ export async function AdminView({ page = 1 }: { page?: number }) {
                     </td>
                     <td className="px-6 py-4 font-medium text-brown whitespace-nowrap">
                       ${payment.amount.toFixed(2)}
-                    </td>
-                    <td className="px-6 py-4 text-xs text-olive font-bold">
-                      {payment.sellerAppId}
                     </td>
                     <td className="px-6 py-4 text-[10px] text-muted-foreground font-mono truncate max-w-[120px]" title={payment.buyerId}>
                       {payment.buyerId}
