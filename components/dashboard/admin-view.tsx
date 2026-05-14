@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { StatCard } from "@/components/ui/stat-card";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { Banknote, TrendingUp, ShoppingBag, BarChart3 } from "lucide-react";
+import { Banknote, TrendingUp, ShoppingBag, BarChart3, Eye } from "lucide-react";
 import Link from "next/link";
 
 import { BarChart } from "@/components/ui/bar-chart";
@@ -113,6 +113,7 @@ export async function AdminView({ page = 1 }: { page?: number }) {
                   <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Comprador</th>
                   <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Fecha / Hora</th>
                   <th className="px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Estado</th>
+                  <th className="px-6 py-4"></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-tan/20">
@@ -145,6 +146,15 @@ export async function AdminView({ page = 1 }: { page?: number }) {
                     </td>
                     <td className="px-6 py-4">
                       <StatusBadge status={payment.status} />
+                    </td>
+                    <td className="px-6 py-4">
+                      <Link
+                        href={`/dashboard/payments/${payment.id}`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-tan/20 text-brown hover:bg-olive hover:text-cream transition-colors"
+                      >
+                        <Eye size={12} />
+                        Ver
+                      </Link>
                     </td>
                   </tr>
                 ))}
