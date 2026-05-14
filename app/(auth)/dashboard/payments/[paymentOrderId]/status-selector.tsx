@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type PaymentStatusSelectorProps = {
   paymentId: number;
@@ -25,8 +26,14 @@ export function PaymentStatusSelector({ paymentId, currentStatus }: PaymentStatu
       if (res.ok) {
         setStatus(newStatus);
         router.refresh();
+        toast.success("Estado actualizado", {
+          description: `La orden cambió a "${newStatus}".`,
+        });
       } else {
-        console.error("Failed to update status");
+        const data = await res.json().catch(() => ({}));
+        toast.error("No se pudo actualizar", {
+          description: data?.error ?? "Ocurrió un error inesperado.",
+        });
       }
     } catch (error) {
       console.error(error);

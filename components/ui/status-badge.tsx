@@ -10,15 +10,15 @@ const statusConfig: Record<
 > = {
   pending: {
     label: "Pendiente",
-    className: "bg-tan/20 text-brown border-tan",
+    className: "bg-amber-100 text-amber-700 border-amber-300",
   },
   accepted: {
     label: "Aceptado",
-    className: "bg-olive/10 text-olive border-olive/20",
+    className: "bg-emerald-100 text-emerald-700 border-emerald-300",
   },
   cancelled: {
     label: "Cancelado",
-    className: "bg-terracotta/10 text-terracotta border-terracotta/20",
+    className: "bg-red-100 text-red-600 border-red-300",
   },
 };
 
