@@ -37,13 +37,34 @@ export default async function PaymentResultPage({ searchParams }: ResultPageProp
       color: "text-red-600",
       icon: "✕",
     },
+    rejected: {
+      title: "Payment Rejected",
+      description:
+        "Your payment was rejected by the processor. Please try again or use a different payment method.",
+      color: "text-red-600",
+      icon: "✕",
+    },
+    in_process: {
+      title: "Payment Processing",
+      description:
+        "Your payment is being processed. We will notify you once it is confirmed.",
+      color: "text-terracotta",
+      icon: "⏳",
+    },
+    cancelled: {
+      title: "Payment Cancelled",
+      description:
+        "The payment process was cancelled or has expired.",
+      color: "text-brown/60",
+      icon: "—",
+    },
   };
 
   const config = statusConfig[status ?? ""] ?? {
-    title: "Payment Status Unknown",
-    description: "We could not determine the status of your payment.",
+    title: "Checkout Incomplete",
+    description: "You haven't completed the payment yet. You can try again whenever you are ready.",
     color: "text-brown/60",
-    icon: "?",
+    icon: "↺",
   };
 
   return (
