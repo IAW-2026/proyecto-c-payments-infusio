@@ -6,10 +6,10 @@ import { BuyerView } from "@/components/dashboard/buyer-view";
 export default async function UnifiedDashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; status?: string }>;
 }) {
   const { userId } = await auth();
-  const { page: pageParam } = await searchParams;
+  const { page: pageParam, status } = await searchParams;
   const page = parseInt(pageParam || "1", 10);
   
   if (!userId) {
@@ -22,7 +22,7 @@ export default async function UnifiedDashboardPage({
   if (role === "admin") {
     return (
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <AdminView page={page} />
+        <AdminView page={page} status={status} />
       </div>
     );
   }

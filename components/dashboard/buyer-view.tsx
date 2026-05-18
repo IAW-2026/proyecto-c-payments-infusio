@@ -110,7 +110,7 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
               {payments.map((payment) => (
                 <Link
                   key={payment.id}
-                  href={`/my-payments/${payment.id}`}
+                  href={`/dashboard/payments/${payment.id}`}
                   className="flex items-center justify-between p-6 hover:bg-background transition-colors group"
                 >
                   <div className="flex flex-col gap-1">

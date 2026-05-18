@@ -28,10 +28,10 @@ export function BarChart({ label, data, color = "primary" }: BarChartProps) {
 
       <div className="flex items-end justify-between sm:justify-center gap-2 sm:gap-4 md:gap-8 h-48" aria-hidden="true">
         {data.map((item, i) => (
-          <div key={i} className="flex-1 max-w-[80px] h-full flex flex-col items-center gap-3 group">
+          <div key={i} tabIndex={0} className="flex-1 max-w-[80px] h-full flex flex-col items-center gap-3 group outline-none cursor-pointer sm:cursor-default">
             <div className="relative w-full flex-1 flex items-end justify-center">
               {/* Tooltip */}
-              <div className="absolute -top-10 bg-brown text-cream text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-xl">
+              <div className="absolute -top-10 bg-brown text-cream text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-xl pointer-events-none">
                 ${item.value.toLocaleString()}
               </div>
               {/* Bar Container (Full height) */}
