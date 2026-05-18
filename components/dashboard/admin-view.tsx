@@ -73,11 +73,11 @@ export async function AdminView({ page = 1, status }: { page?: number; status?: 
     <div className="space-y-12">
       <header className="flex items-start justify-between">
         <div>
-          <p className="text-xs tracking-[0.3em] text-terracotta italic mb-4 uppercase">
+          <p className="text-xs tracking-[0.3em] text-red-900 italic mb-4 uppercase">
             Administración Global
           </p>
           <h1 className="font-serif text-5xl text-brown mb-2">Panel Maestro</h1>
-          <p className="text-sm text-muted-foreground italic">
+          <p className="text-sm text-brown/70 italic">
             Resumen total de la red Infusio.
           </p>
         </div>
@@ -144,19 +144,19 @@ export async function AdminView({ page = 1, status }: { page?: number; status?: 
               <caption className="sr-only">Lista de pagos recientes en el sistema</caption>
               <thead>
                 <tr className="bg-muted/30 border-b border-tan/30">
-                  <th scope="col" className="hidden xl:table-cell px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">MP Payment ID</th>
-                  <th scope="col" className="hidden sm:table-cell px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Nº Orden</th>
-                  <th scope="col" className="px-4 sm:px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Monto</th>
-                  <th scope="col" className="hidden md:table-cell px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Comprador</th>
-                  <th scope="col" className="hidden lg:table-cell px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Fecha / Hora</th>
-                  <th scope="col" className="px-4 sm:px-6 py-4 text-[10px] tracking-widest text-muted-foreground uppercase whitespace-nowrap">Estado</th>
+                  <th scope="col" className="hidden xl:table-cell px-6 py-4 text-[10px] tracking-widest text-brown/70 uppercase whitespace-nowrap">MP Payment ID</th>
+                  <th scope="col" className="hidden sm:table-cell px-6 py-4 text-[10px] tracking-widest text-brown/70 uppercase whitespace-nowrap">Nº Orden</th>
+                  <th scope="col" className="px-4 sm:px-6 py-4 text-[10px] tracking-widest text-brown/70 uppercase whitespace-nowrap">Monto</th>
+                  <th scope="col" className="hidden md:table-cell px-6 py-4 text-[10px] tracking-widest text-brown/70 uppercase whitespace-nowrap">Comprador</th>
+                  <th scope="col" className="hidden lg:table-cell px-6 py-4 text-[10px] tracking-widest text-brown/70 uppercase whitespace-nowrap">Fecha / Hora</th>
+                  <th scope="col" className="px-4 sm:px-6 py-4 text-[10px] tracking-widest text-brown/70 uppercase whitespace-nowrap">Estado</th>
                   <th scope="col" className="px-4 sm:px-6 py-4"><span className="sr-only">Acciones</span></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-tan/20">
                 {recentPayments.map((payment) => (
                   <tr key={payment.id} className="hover:bg-background transition-colors group">
-                    <td className="hidden xl:table-cell px-6 py-4 text-[10px] font-mono text-brown/60">
+                    <td className="hidden xl:table-cell px-6 py-4 text-[10px] font-mono text-brown/80">
                       {payment.mercadoPagoId || "—"}
                     </td>
                     <td className="hidden sm:table-cell px-6 py-4 text-xs font-medium text-brown">
@@ -165,10 +165,10 @@ export async function AdminView({ page = 1, status }: { page?: number; status?: 
                     <td className="px-4 sm:px-6 py-4 font-medium text-brown whitespace-nowrap">
                       ${payment.amount.toFixed(2)}
                     </td>
-                    <td className="hidden md:table-cell px-6 py-4 text-[10px] text-muted-foreground font-mono truncate max-w-[120px]" title={payment.buyerId}>
+                    <td className="hidden md:table-cell px-6 py-4 text-[10px] text-brown/70 font-mono truncate max-w-[120px]" title={payment.buyerId}>
                       {payment.buyerId.slice(0, 8)}...
                     </td>
-                    <td className="hidden lg:table-cell px-6 py-4 text-[10px] text-muted-foreground whitespace-nowrap">
+                    <td className="hidden lg:table-cell px-6 py-4 text-[10px] text-brown/70 whitespace-nowrap">
                       {payment.createdAt.toLocaleString("es-AR", {
                         day: "2-digit",
                         month: "2-digit",

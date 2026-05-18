@@ -70,11 +70,11 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
   return (
     <div className="space-y-12">
       <header>
-        <p className="text-xs tracking-[0.3em] text-terracotta italic mb-4 uppercase">
+        <p className="text-xs tracking-[0.3em] text-red-900 italic mb-4 uppercase">
           Tu Actividad
         </p>
         <h1 className="font-serif text-5xl text-brown mb-2">Mis Compras</h1>
-        <p className="text-sm text-muted-foreground italic">
+        <p className="text-sm text-brown/70 italic">
           Historial detallado de tus transacciones.
         </p>
       </header>
@@ -114,15 +114,15 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
                   className="flex items-center justify-between p-6 hover:bg-background transition-colors group"
                 >
                   <div className="flex flex-col gap-1">
-                    <span className="text-lg font-medium text-brown group-hover:text-terracotta">
+                    <span className="text-lg font-medium text-brown group-hover:text-red-900">
                       ${payment.amount.toFixed(2)}
                     </span>
-                    <span className="text-[10px] tracking-widest text-muted-foreground uppercase">
+                    <span className="text-[10px] tracking-widest text-brown/70 uppercase">
                       Orden #{payment.id}
                     </span>
                   </div>
                   <div className="flex items-center gap-6">
-                    <span className="hidden sm:inline text-xs text-muted-foreground">
+                    <span className="hidden sm:inline text-xs text-brown/70">
                       {payment.createdAt.toLocaleDateString("es-AR")}
                     </span>
                     <StatusBadge status={payment.status} />
