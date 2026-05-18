@@ -11,9 +11,11 @@ export default async function RedirectPage() {
   const user = await currentUser();
   const role = user?.publicMetadata?.role;
 
-  if (role === "admin" || role === "seller") {
-    return <ClientRedirect url="/dashboard" />;
+  if (role === "seller") {
+    // TODO: Ajustar a la ruta real si el seller tiene su propio panel
+    return <ClientRedirect url="/seller" />;
   }
 
-  return <ClientRedirect url="/my-payments" />;
+  // Admins y Buyers comparten la misma ruta base
+  return <ClientRedirect url="/dashboard" />;
 }
