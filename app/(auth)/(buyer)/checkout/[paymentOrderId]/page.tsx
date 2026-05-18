@@ -6,7 +6,7 @@ type CheckoutPageProps = {
   params: Promise<{ paymentOrderId: string }>;
 };
 
-export async function CheckoutPage({ params }: CheckoutPageProps) {
+export default async function CheckoutPage({ params }: CheckoutPageProps) {
   const { paymentOrderId } = await params;
   const { userId } = await auth();
 
