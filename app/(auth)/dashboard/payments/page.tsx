@@ -32,7 +32,7 @@ export default async function PaymentsListPage({
   return (
     <div>
       <h1 className="text-2xl font-semibold text-brown mb-1">Payments</h1>
-      <p className="text-sm text-brown/60 mb-8">
+      <p className="text-sm text-brown/80 mb-8">
         All payment orders in the system
       </p>
 
@@ -49,7 +49,7 @@ export default async function PaymentsListPage({
               href={href}
               className={`px-4 py-2 text-xs font-medium rounded-full transition-colors ${isActive
                   ? "bg-olive text-cream"
-                  : "text-brown/60 border border-tan/30 hover:bg-tan/10"
+                  : "text-brown/80 border border-tan/30 hover:bg-tan/10"
                 }`}
             >
               {btn.label}
@@ -63,19 +63,19 @@ export default async function PaymentsListPage({
         <table className="w-full">
           <thead>
             <tr className="border-b border-tan/20">
-              <th className="hidden md:table-cell text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
+              <th className="hidden md:table-cell text-left px-6 py-3 text-xs font-medium text-brown/80 uppercase tracking-wider">
                 Buyer
               </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
+              <th className="text-left px-4 sm:px-6 py-3 text-xs font-medium text-brown/80 uppercase tracking-wider">
                 Amount
               </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
+              <th className="text-left px-4 sm:px-6 py-3 text-xs font-medium text-brown/80 uppercase tracking-wider">
                 Status
               </th>
-              <th className="hidden sm:table-cell text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
+              <th className="hidden sm:table-cell text-left px-6 py-3 text-xs font-medium text-brown/80 uppercase tracking-wider">
                 Date
               </th>
-              <th className="relative px-6 py-3">
+              <th className="relative px-4 sm:px-6 py-3">
                 <span className="sr-only">View</span>
               </th>
             </tr>
@@ -85,7 +85,7 @@ export default async function PaymentsListPage({
               <tr>
                 <td
                   colSpan={5}
-                  className="px-6 py-16 text-center text-brown/30 text-sm"
+                  className="px-4 sm:px-6 py-16 text-center text-brown/70 text-sm"
                 >
                   No payment orders found.
                 </td>
@@ -96,19 +96,19 @@ export default async function PaymentsListPage({
                   key={payment.id}
                   className="border-b border-tan/10 hover:bg-cream/50 transition-colors"
                 >
-                  <td className="hidden md:table-cell px-6 py-4 text-sm text-brown/70">
+                  <td className="hidden md:table-cell px-6 py-4 text-sm text-brown/90">
                     {payment.buyerId.slice(0, 12)}...
                   </td>
-                  <td className="px-6 py-4 text-sm font-medium text-brown">
+                  <td className="px-4 sm:px-6 py-4 text-sm font-medium text-brown">
                     ${payment.amount.toFixed(2)}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 sm:px-6 py-4">
                     <StatusBadge status={payment.status} />
                   </td>
-                  <td className="hidden sm:table-cell px-6 py-4 text-sm text-brown/50">
+                  <td className="hidden sm:table-cell px-6 py-4 text-sm text-brown/80">
                     {payment.createdAt.toLocaleDateString()}
                   </td>
-                  <td className="px-6 py-4 text-right text-sm font-medium">
+                  <td className="px-4 sm:px-6 py-4 text-right text-sm font-medium">
                     <Link
                       href={`/dashboard/payments/${payment.id}`}
                       className="text-olive hover:text-olive/80 transition-colors"
