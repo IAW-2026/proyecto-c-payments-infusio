@@ -47,11 +47,10 @@ export default async function PaymentsListPage({
             <Link
               key={btn.label}
               href={href}
-              className={`px-4 py-2 text-xs font-medium rounded-full transition-colors ${
-                isActive
+              className={`px-4 py-2 text-xs font-medium rounded-full transition-colors ${isActive
                   ? "bg-olive text-cream"
                   : "text-brown/60 border border-tan/30 hover:bg-tan/10"
-              }`}
+                }`}
             >
               {btn.label}
             </Link>
@@ -64,10 +63,7 @@ export default async function PaymentsListPage({
         <table className="w-full">
           <thead>
             <tr className="border-b border-tan/20">
-              <th className="text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
-                ID
-              </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
+              <th className="hidden md:table-cell text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
                 Buyer
               </th>
               <th className="text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
@@ -76,8 +72,11 @@ export default async function PaymentsListPage({
               <th className="text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
                 Status
               </th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
+              <th className="hidden sm:table-cell text-left px-6 py-3 text-xs font-medium text-brown/50 uppercase tracking-wider">
                 Date
+              </th>
+              <th className="relative px-6 py-3">
+                <span className="sr-only">View</span>
               </th>
             </tr>
           </thead>
@@ -97,15 +96,7 @@ export default async function PaymentsListPage({
                   key={payment.id}
                   className="border-b border-tan/10 hover:bg-cream/50 transition-colors"
                 >
-                  <td className="px-6 py-4 text-sm font-mono text-brown">
-                    <Link
-                      href={`/dashboard/payments/${payment.id}`}
-                      className="hover:text-olive transition-colors"
-                    >
-                      #{payment.id}
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-brown/70">
+                  <td className="hidden md:table-cell px-6 py-4 text-sm text-brown/70">
                     {payment.buyerId.slice(0, 12)}...
                   </td>
                   <td className="px-6 py-4 text-sm font-medium text-brown">
@@ -114,8 +105,16 @@ export default async function PaymentsListPage({
                   <td className="px-6 py-4">
                     <StatusBadge status={payment.status} />
                   </td>
-                  <td className="px-6 py-4 text-sm text-brown/50">
+                  <td className="hidden sm:table-cell px-6 py-4 text-sm text-brown/50">
                     {payment.createdAt.toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 text-right text-sm font-medium">
+                    <Link
+                      href={`/dashboard/payments/${payment.id}`}
+                      className="text-olive hover:text-olive/80 transition-colors"
+                    >
+                      Ver
+                    </Link>
                   </td>
                 </tr>
               ))
