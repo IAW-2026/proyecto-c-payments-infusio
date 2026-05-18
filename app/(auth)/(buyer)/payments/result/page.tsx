@@ -5,12 +5,12 @@ type ResultPageProps = {
   searchParams: Promise<{
     status?: string;
     payment_id?: string;
-    payment_order_id?: string;
+    external_reference?: string;
   }>;
 };
 
 export default async function PaymentResultPage({ searchParams }: ResultPageProps) {
-  const { status, payment_order_id: paymentOrderId } = await searchParams;
+  const { status, external_reference: paymentOrderId } = await searchParams;
 
   const statusConfig: Record<
     string,

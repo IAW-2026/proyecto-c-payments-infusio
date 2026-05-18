@@ -1,12 +1,14 @@
 import { notFound } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
 type CheckoutPageProps = {
   params: Promise<{ paymentOrderId: string }>;
 };
 
-export default async function CheckoutPage({ params }: CheckoutPageProps) {
+export async function CheckoutPage({ params }: CheckoutPageProps) {
   const { paymentOrderId } = await params;
+  const { userId } = await auth();
 
   const payment = await prisma.paymentOrder.findUnique({
     where: { id: parseInt(paymentOrderId, 10) },
@@ -14,6 +16,23 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
 
   if (!payment) {
     notFound();
+  }
+
+  if (!userId || userId !== payment.buyerId) {
+    return (
+      <div className="max-w-2xl mx-auto px-6 py-16 text-center">
+        <div className="bg-white rounded-2xl border border-red-200 p-8 shadow-sm">
+          <div className="text-4xl mb-4">🔒</div>
+          <h1 className="font-brand text-2xl text-brown mb-3">
+            Access Denied
+          </h1>
+          <p className="text-sm text-brown/60">
+            You are not authorized to view this payment order.
+            Only the original buyer can access this checkout.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   const statusStyles: Record<string, string> = {
@@ -75,3 +94,4 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
     </div>
   );
 }
+

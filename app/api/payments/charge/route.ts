@@ -101,13 +101,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           },
         ],
         external_reference: paymentOrder.id.toString(),
-        // @ts-expect-error El SDK v2 de mercadopago pide snake_case (back_urls) en TypeScript, pero en ejecución necesita camelCase (backUrls)
-        backUrls: {
+        back_urls: {
           success: `${baseUrl}/payments/result`,
           failure: `${baseUrl}/payments/result`,
           pending: `${baseUrl}/payments/result`,
         },
-        autoReturn: "approved",
+        auto_return: "approved",
         notification_url: `${baseUrl}/api/payments/webhook`,
       },
     });
