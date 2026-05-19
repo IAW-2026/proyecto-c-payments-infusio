@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { translateMpStatusDetail } from "@/lib/mp-status-utils";
+import { auth } from "@clerk/nextjs/server";
 
 type PaymentStatusPageProps = {
   params: Promise<{ paymentOrderId: string }>;
@@ -9,12 +11,18 @@ export default async function PaymentStatusPage({
   params,
 }: PaymentStatusPageProps) {
   const { paymentOrderId } = await params;
+  const { userId } = await auth();
 
   const payment = await prisma.paymentOrder.findUnique({
     where: { id: parseInt(paymentOrderId, 10) },
   });
 
   if (!payment) {
+    notFound();
+  }
+
+  // Prevent IDOR: Only allow the buyer who placed the order to view their payment status
+  if (payment.buyerId !== userId) {
     notFound();
   }
 
@@ -58,6 +66,16 @@ export default async function PaymentStatusPage({
             {payment.createdAt.toLocaleString()}
           </span>
         </div>
+        {payment.mpStatusDetail && (
+          <div className="pt-4 border-t border-tan/20 space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-brown/50 block">
+              Detalle del pago
+            </span>
+            <p className="text-sm text-brown leading-relaxed bg-tan/10 rounded-xl p-3 border border-tan/20">
+              {translateMpStatusDetail(payment.mpStatusDetail)}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

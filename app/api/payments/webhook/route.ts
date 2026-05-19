@@ -3,16 +3,30 @@ import { prisma } from "@/lib/prisma";
 import { PaymentStatus } from "@/lib/generated/prisma";
 import { MercadoPagoConfig, Payment } from "mercadopago";
 
-function mapMercadoPagoStatus(mpStatus: string): PaymentStatus | null {
+function mapMercadoPagoStatus(mpStatus: string): PaymentStatus {
   const statusMap: Record<string, PaymentStatus> = {
+    // Accepted
     approved: "accepted",
-    rejected: "cancelled",
-    cancelled: "cancelled",
-    refunded: "cancelled",
+    processed: "accepted",
+
+    // Pending
     pending: "pending",
     in_process: "pending",
+    processing: "pending",
+    in_review: "pending",
+    created: "pending",
+    action_required: "pending",
+
+    // Cancelled / Failed
+    rejected: "cancelled",
+    failed: "cancelled",
+    cancelled: "cancelled",
+    canceled: "cancelled",
+    refunded: "cancelled",
+    charged_back: "cancelled",
+    expired: "cancelled",
   };
-  return statusMap[mpStatus] ?? null;
+  return statusMap[mpStatus] ?? "pending";
 }
 
 /**
@@ -74,10 +88,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     const mappedStatus = mapMercadoPagoStatus(mpPayment.status);
-    if (!mappedStatus) {
-      console.warn(`Unknown Mercado Pago status: ${mpPayment.status}`);
-      return NextResponse.json({ ok: true });
-    }
+    const rawStatusDetail = (mpPayment as { status_detail?: string }).status_detail;
 
     const paymentOrder = await prisma.paymentOrder.findUnique({
       where: { id: parseInt(mpPayment.external_reference, 10) },
@@ -89,6 +100,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         data: {
           status: mappedStatus,
           mercadoPagoId: mpPayment.id?.toString(),
+          mpStatus: mpPayment.status,
+          mpStatusDetail: rawStatusDetail ?? null,
         },
       });
       console.log(`Payment ${paymentOrder.id} updated to ${mappedStatus} (MP ID: ${mpPayment.id})`);

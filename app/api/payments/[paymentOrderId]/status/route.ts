@@ -52,7 +52,11 @@ export async function PATCH(
 
   const updatedOrder = await prisma.paymentOrder.update({
     where: { id: paymentOrder.id },
-    data: { status: body.status as PaymentStatus },
+    data: {
+      status: body.status as PaymentStatus,
+      mpStatus: "manual_override",
+      mpStatusDetail: `manual_override_to_${body.status}`,
+    },
   });
 
   return NextResponse.json({ ok: true, status: updatedOrder.status });

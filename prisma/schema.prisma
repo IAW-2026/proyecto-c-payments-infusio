@@ -23,6 +23,8 @@ model PaymentOrder {
   buyerId          String        @map("buyer_id")
   amount           Float
   status           PaymentStatus @default(pending)
+  mpStatus         String?       @map("mp_status")
+  mpStatusDetail   String?       @map("mp_status_detail")
   createdAt        DateTime      @default(now()) @map("created_at")
   updatedAt        DateTime      @updatedAt @map("updated_at")
 

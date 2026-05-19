@@ -5,6 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 import { PaymentStatusSelector } from "./status-selector";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { ArrowLeft } from "lucide-react";
+import { translateMpStatus, translateMpStatusDetail } from "@/lib/mp-status-utils";
 
 type PaymentDetailPageProps = {
   params: Promise<{ paymentOrderId: string }>;
@@ -103,6 +104,29 @@ export default async function PaymentDetailPage({
           />
         </div>
       </div>
+
+      {/* Mercado Pago Provider Details */}
+      {payment.mpStatus && (
+        <div className="mt-6 bg-card rounded-2xl border border-tan/30 p-6 space-y-4">
+          <h2 className="text-xs tracking-widest text-muted-foreground uppercase font-medium">
+            Detalle del Proveedor (Mercado Pago)
+          </h2>
+          <div className="space-y-4">
+            <DetailRow
+              label="Estado original"
+              value={`${translateMpStatus(payment.mpStatus)} (${payment.mpStatus})`}
+            />
+            {payment.mpStatusDetail && (
+              <div className="flex flex-col gap-1 py-1 border-b border-tan/10 last:border-0">
+                <span className="text-xs text-brown/50">Detalle del estado</span>
+                <span className="text-sm text-brown leading-relaxed">
+                  {translateMpStatusDetail(payment.mpStatusDetail)}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
