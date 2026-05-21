@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { PaymentStatusSelector } from "./status-selector";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { ArrowLeft } from "lucide-react";
+import { BackButton } from "@/components/ui/back-button";
 import { translateMpStatus, translateMpStatusDetail } from "@/lib/mp-status-utils";
 
 type PaymentDetailPageProps = {
@@ -33,13 +33,7 @@ export default async function PaymentDetailPage({
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
       {/* Breadcrumb */}
-      <Link
-        href="/dashboard"
-        className="inline-flex items-center gap-2 text-sm text-brown/50 hover:text-olive transition-colors mb-8"
-      >
-        <ArrowLeft size={14} />
-        Volver al dashboard
-      </Link>
+      <BackButton label="Volver al dashboard" />
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">

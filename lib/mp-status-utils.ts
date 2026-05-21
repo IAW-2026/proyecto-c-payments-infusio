@@ -11,7 +11,7 @@ export const MP_STATUS_TRANSLATIONS: Record<string, string> = {
   cancelled: "Cancelado",
   canceled: "Cancelado",
   in_review: "En revisión",
-  manual_override: "Anulación manual",
+  manual_override: "Modificación manual",
 };
 
 export const MP_DETAIL_TRANSLATIONS: Record<string, string> = {
