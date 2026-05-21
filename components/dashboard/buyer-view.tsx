@@ -4,7 +4,8 @@ import { StatCard } from "@/components/ui/stat-card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { ActivityCalendar } from "@/components/ui/activity-calendar";
 import { BarChart } from "@/components/ui/bar-chart";
-import { CreditCard, Clock, Package } from "lucide-react";
+import { CreditCard, Clock, Package, ShoppingBag } from "lucide-react";
+import { EmptyState } from "@/components/ui/empty-state";
 
 import { Pagination } from "@/components/ui/pagination";
 
@@ -32,12 +33,36 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
     }),
   ]);
 
+  // Empty state: buyer has no purchases yet
+  if (totalCount === 0) {
+    return (
+      <div className="space-y-12">
+        <header>
+          <p className="text-xs tracking-[0.3em] text-red-900 italic mb-4 uppercase">
+            Tu Actividad
+          </p>
+          <h1 className="font-serif text-5xl text-brown mb-2">Mis Compras</h1>
+          <p className="text-sm text-brown/70 italic">
+            Historial detallado de tus transacciones.
+          </p>
+        </header>
+        <EmptyState
+          icon={ShoppingBag}
+          title="Aún no tenés compras"
+          description="Cuando realices tu primera compra en Infusio, vas a poder ver acá el detalle y el estado de todos tus pagos."
+          actionLabel="Explorar la Tienda"
+          actionHref={process.env.SELLER_APP_URL || "http://localhost:3001"}
+        />
+      </div>
+    );
+  }
+
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
   const totalSpent = allPaymentsForStats
     .filter(p => p.status === "accepted")
     .reduce((acc, p) => acc + p.amount, 0);
-  
+
   const pendingCount = allPaymentsForStats.filter(p => p.status === "pending").length;
   const totalOrders = totalCount;
 
@@ -49,11 +74,11 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
     const m = d.getMonth();
     const y = d.getFullYear();
     const label = monthNames[m];
-    
+
     const spent = allPaymentsForStats
       .filter((p) => p.status === "accepted" && p.createdAt.getMonth() === m && p.createdAt.getFullYear() === y)
       .reduce((acc, p) => acc + p.amount, 0);
-      
+
     return { label, value: spent };
   });
 
