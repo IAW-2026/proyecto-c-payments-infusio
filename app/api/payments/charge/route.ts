@@ -102,9 +102,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         ],
         external_reference: paymentOrder.id.toString(),
         back_urls: {
-          success: `${baseUrl}/payments/result`,
-          failure: `${baseUrl}/payments/result`,
-          pending: `${baseUrl}/payments/result`,
+          success: "https://proyecto-c-buyer-infusio.vercel.app/?payment_success=true",
+          failure: "https://proyecto-c-buyer-infusio.vercel.app/?payment_failed=true",
+          pending: "https://proyecto-c-buyer-infusio.vercel.app/?payment_pending=true",
         },
         auto_return: "approved",
         notification_url: `${baseUrl}/api/payments/webhook`,

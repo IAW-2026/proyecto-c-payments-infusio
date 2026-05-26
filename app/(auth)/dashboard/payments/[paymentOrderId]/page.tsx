@@ -4,8 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { PaymentStatusSelector } from "./status-selector";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { ArrowLeft } from "lucide-react";
-import { translateMpStatus, translateMpStatusDetail } from "@/lib/mp-status-utils";
+import { BackButton } from "@/components/ui/back-button";
+import { PaymentDetailCard } from "@/components/payments/payment-detail-card";
 
 type PaymentDetailPageProps = {
   params: Promise<{ paymentOrderId: string }>;
@@ -33,13 +33,7 @@ export default async function PaymentDetailPage({
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
       {/* Breadcrumb */}
-      <Link
-        href="/dashboard"
-        className="inline-flex items-center gap-2 text-sm text-brown/50 hover:text-olive transition-colors mb-8"
-      >
-        <ArrowLeft size={14} />
-        Volver al dashboard
-      </Link>
+      <BackButton label="Volver al dashboard" />
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
@@ -63,93 +57,7 @@ export default async function PaymentDetailPage({
         </div>
       </div>
 
-      {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* Order Info */}
-        <div className="bg-card rounded-2xl border border-tan/30 p-6 space-y-4">
-          <h2 className="text-xs tracking-widest text-muted-foreground uppercase font-medium">
-            Información de la Orden
-          </h2>
-          <DetailRow label="ID interno" value={payment.id.toString()} mono />
-          <DetailRow
-            label="MercadoPago ID"
-            value={payment.mercadoPagoId ?? "—"}
-            mono
-          />
-          <DetailRow
-            label="Nº Orden"
-            value={payment.sellerAppOrderId}
-            mono
-          />
-        </div>
-
-        {/* Payment Info */}
-        <div className="bg-card rounded-2xl border border-tan/30 p-6 space-y-4">
-          <h2 className="text-xs tracking-widest text-muted-foreground uppercase font-medium">
-            Datos del Pago
-          </h2>
-          <DetailRow label="Comprador" value={payment.buyerId} mono />
-          <DetailRow
-            label="Monto"
-            value={`$${payment.amount.toFixed(2)}`}
-            bold
-          />
-          <DetailRow
-            label="Creado"
-            value={payment.createdAt.toLocaleString("es-AR")}
-          />
-          <DetailRow
-            label="Actualizado"
-            value={payment.updatedAt.toLocaleString("es-AR")}
-          />
-        </div>
-      </div>
-
-      {/* Mercado Pago Provider Details */}
-      {payment.mpStatus && (
-        <div className="mt-6 bg-card rounded-2xl border border-tan/30 p-6 space-y-4">
-          <h2 className="text-xs tracking-widest text-muted-foreground uppercase font-medium">
-            Detalle del Proveedor (Mercado Pago)
-          </h2>
-          <div className="space-y-4">
-            <DetailRow
-              label="Estado original"
-              value={`${translateMpStatus(payment.mpStatus)} (${payment.mpStatus})`}
-            />
-            {payment.mpStatusDetail && (
-              <div className="flex flex-col gap-1 py-1 border-b border-tan/10 last:border-0">
-                <span className="text-xs text-brown/50">Detalle del estado</span>
-                <span className="text-sm text-brown leading-relaxed">
-                  {translateMpStatusDetail(payment.mpStatusDetail)}
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function DetailRow({
-  label,
-  value,
-  mono = false,
-  bold = false,
-}: {
-  label: string;
-  value: string;
-  mono?: boolean;
-  bold?: boolean;
-}) {
-  return (
-    <div className="flex justify-between items-center gap-4 py-1 border-b border-tan/10 last:border-0">
-      <dt className="text-xs text-brown/50 shrink-0">{label}</dt>
-      <dd
-        className={`text-sm text-brown text-right break-all ${mono ? "font-mono" : ""} ${bold ? "text-lg font-semibold text-olive" : ""}`}
-      >
-        {value}
-      </dd>
+      <PaymentDetailCard payment={payment} />
     </div>
   );
 }
