@@ -28,6 +28,7 @@ export function Logo({ className = "", showText = true }: LogoProps) {
           src="/favicon.ico"
           alt="Infusio Logo"
           fill
+          sizes="32px"
           className="object-contain"
         />
       </div>
