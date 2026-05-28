@@ -1,14 +1,7 @@
 import Image from "next/image";
-import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
 import { HeroActions } from "@/components/hero-actions";
 
 export default async function LandingPage() {
-  const { userId } = await auth();
-  
-  if (userId) {
-    redirect("/redirect");
-  }
 
   const features = [
     {
@@ -77,7 +70,7 @@ export default async function LandingPage() {
             className={`${feature.bgColor} ${feature.textColor} px-8 py-24 sm:px-12 flex flex-col justify-between border-r border-brown/5 last:border-r-0`}
           >
             <div>
-              <span className="text-[10px] tracking-[0.3em] font-medium opacity-60 uppercase">
+              <span className="text-[10px] tracking-[0.3em] font-semibold opacity-90 uppercase">
                 {feature.number} — {feature.label}
               </span>
               <h2 className="mt-6 text-3xl font-serif leading-tight">
@@ -90,16 +83,17 @@ export default async function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-brown text-tan/40 px-6 py-16 flex flex-col items-center text-[10px] tracking-[0.2em] uppercase border-t border-cream/5">
+      <footer className="bg-brown text-tan/80 px-6 py-16 flex flex-col items-center text-[10px] tracking-[0.2em] uppercase border-t border-cream/5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/favicon.ico"
-          alt="Infusio Logo"
+          alt=""
           width={40}
           height={40}
-          className="opacity-40 grayscale hover:grayscale-0 transition-all mb-4"
+          className="opacity-60 grayscale hover:grayscale-0 transition-all mb-4"
         />
         <p className="text-center">
+
           &copy; {new Date().getFullYear()} Infusio Payments. 
           <br className="sm:hidden" /> 
           Parte del Marketplace de Infusio.

@@ -22,21 +22,26 @@ export function Logo({ className = "", showText = true }: LogoProps) {
   const href = mounted && isSignedIn ? "/dashboard" : "/";
 
   return (
-    <Link href={href} className={`flex items-center gap-3 group ${className}`}>
-      <div className="relative w-8 h-8 transition-transform group-hover:scale-110 duration-300">
+    <Link 
+      href={href} 
+      className={`flex items-center gap-3 group ${className}`}
+      aria-label="Infusio Payments"
+    >
+      <div className="relative w-8 h-8 transition-transform group-hover:scale-110 duration-300" aria-hidden="true">
         <Image
           src="/favicon.ico"
-          alt="Infusio Logo"
+          alt=""
           fill
           sizes="32px"
           className="object-contain"
         />
       </div>
       {showText && (
-        <span className="font-brand text-2xl text-brown tracking-wide">
+        <span className="font-brand text-2xl text-brown tracking-wide" aria-hidden="true">
           Infusio <span className="text-olive font-semibold italic">Payments</span>
         </span>
       )}
     </Link>
   );
 }
+
