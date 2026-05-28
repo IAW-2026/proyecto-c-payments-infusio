@@ -15,7 +15,7 @@ export default async function LandingPage() {
       number: "02",
       label: "SEGUIMIENTO",
       title: "Estado del pago en tiempo real para compradores y vendedores.",
-      bgColor: "bg-terracotta",
+      bgColor: "bg-[#a05c39]",
       textColor: "text-cream",
     },
     {
@@ -70,7 +70,7 @@ export default async function LandingPage() {
             className={`${feature.bgColor} ${feature.textColor} px-8 py-24 sm:px-12 flex flex-col justify-between border-r border-brown/5 last:border-r-0`}
           >
             <div>
-              <span className="text-[10px] tracking-[0.3em] font-semibold opacity-90 uppercase">
+              <span className="text-[10px] tracking-[0.3em] font-bold uppercase">
                 {feature.number} — {feature.label}
               </span>
               <h2 className="mt-6 text-3xl font-serif leading-tight">

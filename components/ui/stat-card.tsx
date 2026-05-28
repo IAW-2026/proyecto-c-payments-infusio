@@ -18,16 +18,19 @@ export function StatCard({ label, value, icon: Icon, trend }: StatCardProps) {
       aria-label={`Estadística: ${label}`}
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium">
+        <h2 className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium">
           {label}
-        </h3>
+        </h2>
         {Icon && <Icon className="w-5 h-5 text-olive opacity-60" aria-hidden="true" />}
       </div>
       <div className="flex items-baseline gap-2">
         <span className="text-3xl font-serif text-brown">{value}</span>
       </div>
       {trend && (
-        <div className="mt-4 flex items-center gap-1.5" aria-label={`Tendencia: ${trend.isPositive ? 'Subió' : 'Bajó'} un ${Math.abs(trend.value)}% ${trend.label}`}>
+        <div className="mt-4 flex items-center gap-1.5">
+          <span className="sr-only">
+            Tendencia: {trend.isPositive ? 'Subió' : 'Bajó'} un {Math.abs(trend.value)}% {trend.label}
+          </span>
           <span
             className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
               trend.isPositive
@@ -43,6 +46,7 @@ export function StatCard({ label, value, icon: Icon, trend }: StatCardProps) {
           </span>
         </div>
       )}
+
     </article>
   );
 }

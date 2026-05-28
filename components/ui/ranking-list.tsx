@@ -18,9 +18,9 @@ export function RankingList({ title, data }: RankingListProps) {
 
   return (
     <div className="bg-card p-6 rounded-3xl border border-tan shadow-sm flex flex-col h-full">
-      <h3 className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium mb-8">
+      <h2 className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium mb-8">
         {title}
-      </h3>
+      </h2>
 
       <div className="space-y-6 flex-1">
         {data.length === 0 ? (

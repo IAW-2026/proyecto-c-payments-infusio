@@ -12,9 +12,9 @@ export function BarChart({ label, data, color = "primary" }: BarChartProps) {
       className="bg-card p-6 rounded-3xl border border-tan shadow-sm"
       aria-label={`Gráfico de barras: ${label}`}
     >
-      <h3 className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium mb-8" aria-hidden="true">
+      <h2 className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium mb-8" aria-hidden="true">
         {label}
-      </h3>
+      </h2>
       
       {/* Screen reader only data */}
       <div className="sr-only">
@@ -28,7 +28,8 @@ export function BarChart({ label, data, color = "primary" }: BarChartProps) {
 
       <div className="flex items-end justify-between sm:justify-center gap-2 sm:gap-4 md:gap-8 h-48" aria-hidden="true">
         {data.map((item, i) => (
-          <div key={i} tabIndex={0} className="flex-1 max-w-[80px] h-full flex flex-col items-center gap-3 group outline-none cursor-pointer sm:cursor-default">
+          <div key={i} className="flex-1 max-w-[80px] h-full flex flex-col items-center gap-3 group outline-none cursor-pointer sm:cursor-default">
+
             <div className="relative w-full flex-1 flex items-end justify-center">
               {/* Tooltip */}
               <div className="absolute -top-10 bg-brown text-cream text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity whitespace-nowrap z-10 shadow-xl pointer-events-none">

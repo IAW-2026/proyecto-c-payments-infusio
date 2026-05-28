@@ -13,9 +13,10 @@ export function ActivityCalendar({ data }: ActivityCalendarProps) {
       className="bg-card p-6 rounded-3xl border border-tan shadow-sm"
       aria-label="Frecuencia de Compra"
     >
-      <h3 className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium mb-6" aria-hidden="true">
+      <h2 className="text-xs tracking-[0.2em] text-muted-foreground uppercase font-medium mb-6" aria-hidden="true">
         Frecuencia de Compra
-      </h3>
+      </h2>
+
       
       {/* Screen reader only data */}
       <div className="sr-only">

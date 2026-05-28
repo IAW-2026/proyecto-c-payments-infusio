@@ -1,7 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { AdminView } from "@/components/dashboard/admin-view";
 import { BuyerView } from "@/components/dashboard/buyer-view";
+import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
 
 export default async function UnifiedDashboardPage({
   searchParams,
@@ -21,7 +23,9 @@ export default async function UnifiedDashboardPage({
   if (role === "admin") {
     return (
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <AdminView page={page} status={status} />
+        <Suspense fallback={<DashboardSkeleton />}>
+          <AdminView page={page} status={status} />
+        </Suspense>
       </div>
     );
   }
@@ -29,7 +33,9 @@ export default async function UnifiedDashboardPage({
   // Default: Buyer view
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
-      <BuyerView userId={userId} page={page} />
+      <Suspense fallback={<DashboardSkeleton />}>
+        <BuyerView userId={userId} page={page} />
+      </Suspense>
     </div>
   );
 }
