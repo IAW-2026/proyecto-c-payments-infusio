@@ -1,14 +1,19 @@
 "use client";
 
-import { Logo } from "@/components/ui/logo";
-
 export default function GlobalLoading() {
   return (
     <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-cream animate-in fade-in duration-500">
       <div className="relative flex flex-col items-center">
         {/* Logo with breathing animation */}
         <div className="animate-pulse duration-[2000ms]">
-          <Logo showText={false} className="scale-[2.5]" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/favicon.ico"
+            alt="Infusio Logo"
+            width={80}
+            height={80}
+            className="object-contain"
+          />
         </div>
         
         {/* Steaming effect (simple CSS) */}

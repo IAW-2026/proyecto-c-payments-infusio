@@ -47,6 +47,7 @@ export default async function LandingPage() {
           quality={85}
           className="object-cover"
           priority
+          fetchPriority="high"
         />
         {/* Overlay */}
         <div className="absolute inset-0 bg-brown/60 backdrop-blur-[2px]" />
