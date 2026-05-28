@@ -44,6 +44,8 @@ export default async function LandingPage() {
           src="/infusio_hero_background_1778540230135.png"
           alt="Infusio Hero"
           fill
+          sizes="100vw"
+          quality={85}
           className="object-cover"
           priority
         />

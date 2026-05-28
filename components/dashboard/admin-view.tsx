@@ -21,6 +21,9 @@ export async function AdminView({ page = 1, status }: { page?: number; status?: 
     ? { status: status as PaymentStatus }
     : {};
 
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
   const [total, approved, pending, revenue, recentPayments, totalPaymentsCount, allAcceptedPayments] = await Promise.all([
     prisma.paymentOrder.count(),
     prisma.paymentOrder.count({ where: { status: "accepted" } }),
@@ -37,7 +40,7 @@ export async function AdminView({ page = 1, status }: { page?: number; status?: 
     }),
     prisma.paymentOrder.count({ where: filterClause }),
     prisma.paymentOrder.findMany({
-      where: { status: "accepted" },
+      where: { status: "accepted", createdAt: { gte: sixMonthsAgo } },
       select: { amount: true, createdAt: true },
     }),
   ]);

@@ -20,6 +20,9 @@ interface BuyerViewProps {
 export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
   const skip = (page - 1) * PAGE_SIZE;
 
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
   const [payments, totalCount, allPaymentsForStats] = await Promise.all([
     prisma.paymentOrder.findMany({
       where: { buyerId: userId },
@@ -29,7 +32,7 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
     }),
     prisma.paymentOrder.count({ where: { buyerId: userId } }),
     prisma.paymentOrder.findMany({
-      where: { buyerId: userId },
+      where: { buyerId: userId, createdAt: { gte: sixMonthsAgo } },
       select: { amount: true, createdAt: true, status: true },
     }),
   ]);
