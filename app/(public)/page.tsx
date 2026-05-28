@@ -1,14 +1,13 @@
 import Image from "next/image";
-import { ClientRedirect } from "@/app/redirect/client-redirect";
+import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 import { HeroActions } from "@/components/hero-actions";
-import { Logo } from "@/components/ui/logo";
 
 export default async function LandingPage() {
   const { userId } = await auth();
   
   if (userId) {
-    return <ClientRedirect url="/redirect" />;
+    redirect("/redirect");
   }
 
   const features = [
@@ -91,7 +90,14 @@ export default async function LandingPage() {
 
       {/* Footer */}
       <footer className="bg-brown text-tan/40 px-6 py-16 flex flex-col items-center text-[10px] tracking-[0.2em] uppercase border-t border-cream/5">
-        <Logo showText={false} className="opacity-40 grayscale hover:grayscale-0 transition-all mb-4 scale-125" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/favicon.ico"
+          alt="Infusio Logo"
+          width={40}
+          height={40}
+          className="opacity-40 grayscale hover:grayscale-0 transition-all mb-4"
+        />
         <p className="text-center">
           &copy; {new Date().getFullYear()} Infusio Payments. 
           <br className="sm:hidden" /> 
