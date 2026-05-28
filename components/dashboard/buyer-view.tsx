@@ -6,8 +6,9 @@ import { ActivityCalendar } from "@/components/ui/activity-calendar";
 import { BarChart } from "@/components/ui/bar-chart";
 import { CreditCard, Clock, Package, ShoppingBag } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
-
-import { Pagination } from "@/components/ui/pagination";
+import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+import { StatGrid, type StatItem } from "@/components/dashboard/stat-grid";
+import { BuyerPaymentsList } from "@/components/dashboard/buyer-payments-list";
 
 const PAGE_SIZE = 10;
 
@@ -37,15 +38,11 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
   if (totalCount === 0) {
     return (
       <div className="space-y-12">
-        <header>
-          <p className="text-xs tracking-[0.3em] text-red-900 italic mb-4 uppercase">
-            Tu Actividad
-          </p>
-          <h1 className="font-serif text-5xl text-brown mb-2">Mis Compras</h1>
-          <p className="text-sm text-brown/70 italic">
-            Historial detallado de tus transacciones.
-          </p>
-        </header>
+        <DashboardHeader
+          eyebrow="Tu Actividad"
+          title="Mis Compras"
+          description="Historial detallado de tus transacciones."
+        />
         <EmptyState
           icon={ShoppingBag}
           title="Aún no tenés compras"
@@ -92,36 +89,21 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
     return { date: dateStr, count };
   });
 
+  const stats: StatItem[] = [
+    { label: "Total Gastado", value: `$${totalSpent.toLocaleString()}`, icon: CreditCard },
+    { label: "Pendientes", value: pendingCount, icon: Clock },
+    { label: "Total Órdenes", value: totalOrders, icon: Package },
+  ];
+
   return (
     <div className="space-y-12">
-      <header>
-        <p className="text-xs tracking-[0.3em] text-red-900 italic mb-4 uppercase">
-          Tu Actividad
-        </p>
-        <h1 className="font-serif text-5xl text-brown mb-2">Mis Compras</h1>
-        <p className="text-sm text-brown/70 italic">
-          Historial detallado de tus transacciones.
-        </p>
-      </header>
+      <DashboardHeader
+        eyebrow="Tu Actividad"
+        title="Mis Compras"
+        description="Historial detallado de tus transacciones."
+      />
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <StatCard
-          label="Total Gastado"
-          value={`$${totalSpent.toLocaleString()}`}
-          icon={CreditCard}
-        />
-        <StatCard
-          label="Pendientes"
-          value={pendingCount}
-          icon={Clock}
-        />
-        <StatCard
-          label="Total Órdenes"
-          value={totalOrders}
-          icon={Package}
-        />
-      </div>
+      <StatGrid stats={stats} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-1 space-y-8">
@@ -129,36 +111,12 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
           <BarChart label="Gasto Mensual" data={monthlyData} color="accent" />
         </div>
 
-        <div className="lg:col-span-2">
-          <div className="bg-card rounded-3xl border border-tan overflow-hidden shadow-sm">
-            <div className="divide-y divide-tan/30">
-              {payments.map((payment) => (
-                <Link
-                  key={payment.id}
-                  href={`/dashboard/payments/${payment.id}`}
-                  className="flex items-center justify-between p-6 hover:bg-background transition-colors group"
-                >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-lg font-medium text-brown group-hover:text-red-900">
-                      ${payment.amount.toFixed(2)}
-                    </span>
-                    <span className="text-[10px] tracking-widest text-brown/70 uppercase">
-                      Orden #{payment.id}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-6">
-                    <span className="hidden sm:inline text-xs text-brown/70">
-                      {payment.createdAt.toLocaleDateString("es-AR")}
-                    </span>
-                    <StatusBadge status={payment.status} />
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
+        <BuyerPaymentsList
+          payments={payments}
+          totalPages={totalPages}
+          currentPage={page}
+        />
       </div>
-      <Pagination totalPages={totalPages} currentPage={page} />
     </div>
   );
 }
