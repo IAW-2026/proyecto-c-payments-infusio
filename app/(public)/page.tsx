@@ -40,7 +40,7 @@ export default async function LandingPage() {
       <section className="relative flex flex-col items-center justify-center px-6 py-32 sm:py-48 text-center overflow-hidden min-h-[80vh]">
         {/* Background Image */}
         <Image
-          src="/infusio_hero_background_1778540230135.png"
+          src="/hero-bg.webp"
           alt="Infusio Hero"
           fill
           sizes="100vw"
