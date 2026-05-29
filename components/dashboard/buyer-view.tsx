@@ -6,7 +6,6 @@ import { ActivityCalendar } from "@/components/ui/activity-calendar";
 import { BarChart } from "@/components/ui/bar-chart";
 import { CreditCard, Clock, Package, ShoppingBag } from "lucide-react";
 import { EmptyState } from "@/components/ui/empty-state";
-import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { StatGrid, type StatItem } from "@/components/dashboard/stat-grid";
 import { BuyerPaymentsList } from "@/components/dashboard/buyer-payments-list";
 
@@ -41,11 +40,6 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
   if (totalCount === 0) {
     return (
       <div className="space-y-12">
-        <DashboardHeader
-          eyebrow="Tu Actividad"
-          title="Mis Compras"
-          description="Historial detallado de tus transacciones."
-        />
         <EmptyState
           icon={ShoppingBag}
           title="Aún no tenés compras"
@@ -100,12 +94,6 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
 
   return (
     <div className="space-y-12">
-      <DashboardHeader
-        eyebrow="Tu Actividad"
-        title="Mis Compras"
-        description="Historial detallado de tus transacciones."
-      />
-
       <StatGrid stats={stats} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">

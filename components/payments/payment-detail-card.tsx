@@ -14,17 +14,19 @@ export function PaymentDetailCard({ payment }: PaymentDetailCardProps) {
           <h2 className="text-xs tracking-widest text-muted-foreground uppercase font-medium">
             Información de la Orden
           </h2>
-          <DetailRow label="ID interno" value={payment.id.toString()} mono />
-          <DetailRow
-            label="MercadoPago ID"
-            value={payment.mercadoPagoId ?? "—"}
-            mono
-          />
-          <DetailRow
-            label="Nº Orden"
-            value={payment.sellerAppOrderId}
-            mono
-          />
+          <dl className="space-y-4">
+            <DetailRow label="ID interno" value={payment.id.toString()} mono />
+            <DetailRow
+              label="MercadoPago ID"
+              value={payment.mercadoPagoId ?? "—"}
+              mono
+            />
+            <DetailRow
+              label="Nº Orden"
+              value={payment.sellerAppOrderId}
+              mono
+            />
+          </dl>
         </div>
 
         {/* Payment Info */}
@@ -32,20 +34,22 @@ export function PaymentDetailCard({ payment }: PaymentDetailCardProps) {
           <h2 className="text-xs tracking-widest text-muted-foreground uppercase font-medium">
             Datos del Pago
           </h2>
-          <DetailRow label="Comprador" value={payment.buyerId} mono />
-          <DetailRow
-            label="Monto"
-            value={`$${payment.amount.toFixed(2)}`}
-            bold
-          />
-          <DetailRow
-            label="Creado"
-            value={payment.createdAt.toLocaleString("es-AR")}
-          />
-          <DetailRow
-            label="Actualizado"
-            value={payment.updatedAt.toLocaleString("es-AR")}
-          />
+          <dl className="space-y-4">
+            <DetailRow label="Comprador" value={payment.buyerId} mono />
+            <DetailRow
+              label="Monto"
+              value={`$${payment.amount.toFixed(2)}`}
+              bold
+            />
+            <DetailRow
+              label="Creado"
+              value={payment.createdAt.toLocaleString("es-AR")}
+            />
+            <DetailRow
+              label="Actualizado"
+              value={payment.updatedAt.toLocaleString("es-AR")}
+            />
+          </dl>
         </div>
       </div>
 
@@ -55,20 +59,18 @@ export function PaymentDetailCard({ payment }: PaymentDetailCardProps) {
           <h2 className="text-xs tracking-widest text-muted-foreground uppercase font-medium">
             Detalle del Proveedor (Mercado Pago)
           </h2>
-          <div className="space-y-4">
+          <dl className="space-y-4">
             <DetailRow
               label="Estado original"
               value={`${translateMpStatus(payment.mpStatus)} (${payment.mpStatus})`}
             />
             {payment.mpStatusDetail && (
-              <div className="flex flex-col gap-1 py-1 border-b border-tan/10 last:border-0">
-                <span className="text-xs text-brown/50">Detalle del estado</span>
-                <span className="text-sm text-brown leading-relaxed">
-                  {translateMpStatusDetail(payment.mpStatusDetail)}
-                </span>
-              </div>
+              <DetailRow
+                label="Detalle del estado"
+                value={translateMpStatusDetail(payment.mpStatusDetail)}
+              />
             )}
-          </div>
+          </dl>
         </div>
       )}
     </>
@@ -88,7 +90,7 @@ function DetailRow({
 }) {
   return (
     <div className="flex justify-between items-center gap-4 py-1 border-b border-tan/10 last:border-0">
-      <dt className="text-xs text-brown/50 shrink-0">{label}</dt>
+      <dt className="text-xs text-brown/75 shrink-0">{label}</dt>
       <dd
         className={`text-sm text-brown text-right break-all ${mono ? "font-mono" : ""} ${bold ? "text-lg font-semibold text-olive" : ""}`}
       >

@@ -1,14 +1,20 @@
-export function DashboardSkeleton() {
+interface DashboardSkeletonProps {
+  showHeader?: boolean;
+}
+
+export function DashboardSkeleton({ showHeader = true }: DashboardSkeletonProps) {
   return (
     <div className="space-y-8 animate-pulse" aria-hidden="true">
       {/* Header Skeleton */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <div className="h-4 w-32 bg-tan/20 rounded-full mb-2" />
-          <div className="h-10 w-64 bg-tan/30 rounded-2xl" />
+      {showHeader && (
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <div className="h-4 w-32 bg-tan/20 rounded-full mb-2" />
+            <div className="h-10 w-64 bg-tan/30 rounded-2xl" />
+          </div>
+          <div className="h-12 w-40 bg-tan/20 rounded-full self-start md:self-center" />
         </div>
-        <div className="h-12 w-40 bg-tan/20 rounded-full self-start md:self-center" />
-      </div>
+      )}
 
       {/* Stats Grid Skeleton */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

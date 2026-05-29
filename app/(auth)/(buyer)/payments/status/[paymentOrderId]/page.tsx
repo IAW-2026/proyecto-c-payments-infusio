@@ -41,13 +41,13 @@ export default async function PaymentStatusPage({
 
       <div className="bg-white rounded-2xl border border-tan/30 p-8 shadow-sm space-y-5">
         <div className="flex justify-between items-center pb-4 border-b border-tan/20">
-          <span className="text-sm text-brown/60">Payment Order ID</span>
+          <span className="text-sm text-brown/75">Payment Order ID</span>
           <span className="text-sm font-mono text-brown">
             #{payment.id}
           </span>
         </div>
         <div className="flex justify-between items-center pb-4 border-b border-tan/20">
-          <span className="text-sm text-brown/60">Status</span>
+          <span className="text-sm text-brown/75">Status</span>
           <span
             className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${statusStyles[payment.status] ?? statusStyles.pending}`}
           >
@@ -55,20 +55,20 @@ export default async function PaymentStatusPage({
           </span>
         </div>
         <div className="flex justify-between items-center pb-4 border-b border-tan/20">
-          <span className="text-sm text-brown/60">Amount</span>
+          <span className="text-sm text-brown/75">Amount</span>
           <span className="text-lg font-semibold text-brown">
             ${payment.amount.toFixed(2)}
           </span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-sm text-brown/60">Created</span>
-          <span className="text-sm text-brown/60">
+          <span className="text-sm text-brown/75">Created</span>
+          <span className="text-sm text-brown/75">
             {payment.createdAt.toLocaleString()}
           </span>
         </div>
         {payment.mpStatusDetail && (
           <div className="pt-4 border-t border-tan/20 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-brown/50 block">
+            <span className="text-xs font-semibold uppercase tracking-wider text-brown/75 block">
               Detalle del pago
             </span>
             <p className="text-sm text-brown leading-relaxed bg-tan/10 rounded-xl p-3 border border-tan/20">

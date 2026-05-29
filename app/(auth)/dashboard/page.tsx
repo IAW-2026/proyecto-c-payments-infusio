@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { AdminView } from "@/components/dashboard/admin-view";
 import { BuyerView } from "@/components/dashboard/buyer-view";
+import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
 
 export default async function UnifiedDashboardPage({
@@ -23,7 +24,12 @@ export default async function UnifiedDashboardPage({
   if (role === "admin") {
     return (
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <Suspense fallback={<DashboardSkeleton />}>
+        <DashboardHeader
+          eyebrow="Administración Global"
+          title="Panel Maestro"
+          description="Resumen total de la red Infusio."
+        />
+        <Suspense fallback={<DashboardSkeleton showHeader={false} />}>
           <AdminView page={page} status={status} />
         </Suspense>
       </div>
@@ -33,7 +39,12 @@ export default async function UnifiedDashboardPage({
   // Default: Buyer view
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
-      <Suspense fallback={<DashboardSkeleton />}>
+      <DashboardHeader
+        eyebrow="Tu Actividad"
+        title="Mis Compras"
+        description="Historial detallado de tus transacciones."
+      />
+      <Suspense fallback={<DashboardSkeleton showHeader={false} />}>
         <BuyerView userId={userId} page={page} />
       </Suspense>
     </div>

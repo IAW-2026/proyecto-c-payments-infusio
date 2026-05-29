@@ -7,7 +7,6 @@ import Link from "next/link";
 
 import { BarChart } from "@/components/ui/bar-chart";
 import { ExportButton } from "@/components/ui/export-button";
-import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { StatGrid, type StatItem } from "@/components/dashboard/stat-grid";
 import { AdminPaymentsTable } from "@/components/dashboard/admin-payments-table";
 
@@ -74,13 +73,10 @@ export async function AdminView({ page = 1, status }: { page?: number; status?: 
 
   return (
     <div className="space-y-12">
-      <DashboardHeader
-        eyebrow="Administración Global"
-        title="Panel Maestro"
-        description="Resumen total de la red Infusio."
-      >
+      {/* Export button positioned at top right of the data section */}
+      <div className="flex justify-end -mb-8">
         <ExportButton data={recentPayments} />
-      </DashboardHeader>
+      </div>
 
       <StatGrid stats={stats} />
 
