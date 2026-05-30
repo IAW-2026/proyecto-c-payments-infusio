@@ -25,6 +25,7 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
     <nav aria-label="Paginación" className="flex items-center justify-center gap-2 mt-8">
       <Link
         href={createPageURL(currentPage - 1)}
+        scroll={false}
         className={`p-2 rounded-full border border-tan transition-colors ${
           currentPage <= 1
             ? "opacity-30 pointer-events-none"
@@ -43,6 +44,7 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
             <Link
               key={page}
               href={createPageURL(page)}
+              scroll={false}
               className={`w-8 h-8 flex items-center justify-center rounded-full text-xs font-bold transition-all ${
                 isCurrent
                   ? "bg-brown text-cream shadow-md scale-110"
@@ -59,6 +61,7 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
 
       <Link
         href={createPageURL(currentPage + 1)}
+        scroll={false}
         className={`p-2 rounded-full border border-tan transition-colors ${
           currentPage >= totalPages
             ? "opacity-30 pointer-events-none"

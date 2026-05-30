@@ -61,5 +61,31 @@ export async function PATCH(
     },
   });
 
+  const sellerAppUrl = process.env.SELLER_APP_URL;
+  if (sellerAppUrl) {
+    try {
+      const response = await fetch(`${sellerAppUrl}/api/orders/${paymentOrder.sellerAppOrderId}/payment-confirmed`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": process.env.PAYMENTS_API_KEY || "",
+        },
+        body: JSON.stringify({
+          payment_order_id: paymentOrder.id,
+          status: updatedOrder.status,
+        }),
+      });
+      if (!response.ok) {
+        console.error(`Seller App notification failed with status: ${response.status}`);
+      } else {
+        console.log(`Successfully notified Seller App for order ${paymentOrder.sellerAppOrderId} (manual override)`);
+      }
+    } catch (fetchError) {
+      console.error("Failed to reach Seller App:", fetchError);
+    }
+  } else {
+    console.warn("SELLER_APP_URL is not configured. Could not notify Seller App.");
+  }
+
   return NextResponse.json({ ok: true, status: updatedOrder.status });
 }
