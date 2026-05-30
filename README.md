@@ -1,62 +1,32 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Ks7Ywtwc)
-# Infusio Payments
+# Infusio — Payments App
 
-Aplicación **Payments** del [Proyecto IAW 2026](https://iaw-2026.github.io/proyecto/) — comisión `<!-- completar -->`.
+Aplicación **Payments** del [Proyecto IAW 2026](https://iaw-2026.github.io/proyecto/) — Tipo C (Marketplace) — Red Infusio.
 
-Esta app corresponde al módulo de pagos en los proyectos de tipo **C (Marketplace)**, diseñado específicamente para la red de **Infusio** (venta de té, café y accesorios de especialidad).
-
----
-
-## Características Principales
-- **Autenticación (Clerk):** Perfiles seguros para Administradores, Compradores y Vendedores.
-- **Integración Mercado Pago:** Checkout Pro en modo Sandbox con recepción de Webhooks.
-- **Dashboards Personalizados:** Vistas de métricas, gráficos y listados de transacciones dependiendo del rol.
-- **Base de Datos (Prisma + PostgreSQL):** Registro inmutable de transacciones y estados (`pending`, `accepted`, `cancelled`).
-- **Exportación CSV:** Reportes descargables desde el panel de Administración.
+> 🔗 **[proyecto-c-payments-infusio.vercel.app](https://proyecto-c-payments-infusio.vercel.app)**
 
 ---
 
-## Guía de Instalación Local
+## ¿Qué es esta app?
 
-Para correr este proyecto y evaluarlo localmente, sigue estos pasos:
+**Infusio Payments** es el módulo de pagos del ecosistema Infusio, un marketplace de té, café e infusiones de especialidad.
 
-### 1. Clonar e Instalar
-\`\`\`bash
-git clone https://github.com/IAW-2026/proyecto-c-payments-infusio.git
-cd proyecto-c-payments-infusio
-npm install
-\`\`\`
+Se encarga de coordinar el flujo de cobro entre el vendedor, el comprador y Mercado Pago: recibe solicitudes de pago, procesa las notificaciones de Mercado Pago y actualiza el estado de las órdenes en el sistema.
 
-### 2. Variables de Entorno
-Copia el archivo de ejemplo para crear tus variables locales:
-\`\`\`bash
-cp .env.example .env.local
-\`\`\`
+Incluye un **panel de administración** para gestionar y monitorear los pagos, y una **vista para el comprador** donde puede consultar el estado de sus transacciones.
 
-Asegúrate de configurar las siguientes variables en `.env.local`:
-- \`DATABASE_URL\`: Conexión a tu base de datos PostgreSQL local o remota.
-- \`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY\` y \`CLERK_SECRET_KEY\`: Tus credenciales de Clerk.
-- \`MP_ACCESS_TOKEN\`: Tu Access Token de prueba de Mercado Pago.
-- \`NEXT_PUBLIC_APP_URL\`: La URL donde corre la app (ej: \`http://localhost:3000\`).
-
-### 3. Base de Datos
-Sincroniza el esquema de Prisma con la base de datos:
-\`\`\`bash
-npx prisma db push
-\`\`\`
-
-### 4. Levantar el Servidor
-\`\`\`bash
-npm run dev
-\`\`\`
-La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
+> [!NOTE]
+> Esta es la **Etapa 2** del proyecto. La integración con la Seller App y la Buyer App está implementada pero aún no conectada de forma completa, ya que los demás servicios del grupo se encuentran en desarrollo. La única redirección que funciona es la del checkout de Mercado Pago a la Buyer App.
 
 ---
 
-## Pruebas de Pagos (Mercado Pago Sandbox)
-Para probar el flujo de pagos completo, debes utilizar las **tarjetas de prueba** provistas por Mercado Pago. 
+## Usuarios de prueba
 
-Al hacer clic en "Aprobar Pago" (o simular un pago), serás redirigido de vuelta a la aplicación donde verás una confirmación visual y el cambio de estado en el panel de control.
+| Rol | Email | Contraseña |
+|-----|-------|------------|
+| Administrador | admin@infusio.com | Infusio2024! |
+| Usuario final | cliente@infusio.com | Infusio2024! |
 
 ---
+
 Enunciado completo: <https://iaw-2026.github.io/proyecto/>

@@ -8,13 +8,6 @@ export default async function RedirectPage() {
     return <ClientRedirect url="/sign-in" />;
   }
 
-  const role = sessionClaims?.metadata?.role as string | undefined;
-
-  if (role === "seller") {
-    // TODO: Ajustar a la ruta real si el seller tiene su propio panel
-    return <ClientRedirect url="/seller" />;
-  }
-
-  // Admins y Buyers comparten la misma ruta base
+  // Todos van al dashboard; la diferenciación admin/buyer ocurre allí
   return <ClientRedirect url="/dashboard" />;
 }

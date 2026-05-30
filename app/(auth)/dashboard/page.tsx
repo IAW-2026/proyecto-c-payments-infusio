@@ -19,9 +19,9 @@ export default async function UnifiedDashboardPage({
     redirect("/sign-in");
   }
 
-  const role = sessionClaims?.metadata?.role as string | undefined;
+  const isAdmin = sessionClaims?.metadata?.roles?.includes("admin") ?? false;
 
-  if (role === "admin") {
+  if (isAdmin) {
     return (
       <div className="max-w-7xl mx-auto px-6 py-12">
         <DashboardHeader

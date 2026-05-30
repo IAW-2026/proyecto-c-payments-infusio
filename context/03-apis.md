@@ -21,13 +21,141 @@ Documentar cada endpoint que una app expone para ser consumido por otra app del 
     ```json
     {
         "shopping_cart_id": "string",
-        "user_id": "string"
+        "user_id": "string",
+        "cart_items": [
+            {
+                "id": "string",
+                "cart_id": "string",
+                "product_id": "string",
+                "product_name": "string",
+                "product_variant": "string",
+                "product_image_url": "string",
+                "price_at_time": "decimal",
+                "quantity": "int"
+            }
+        ],
+        "address": {
+            "street": "string",
+            "city": "string",
+            "province": "string",
+            "postal_code": "string",
+        }
     }
     ```
 - **Response:**
     ```json
     {
-        "purchase_order_id": "string"
+        "purchase_order_id": "po_738219465",
+        "user_id": "user_2Niz9KxWLxt6Vp7bN4C5aK8jX3a",
+        "shopping_cart_id": "cart_abc123xyz",
+        "status": "pending",
+        "created_at": "2026-05-29T12:48:00.000Z",
+        "shipping_id": "ship_987654321",
+        "payment_id": null,
+        "payment_url": "https://buyer-app-domain.com/api/payments/payment-url?order_id=po_738219465&amount=15500",
+        "shipping_cost": 1500,
+        "currency": "ARS",
+        "address": "Av. Alem 1250, Bahía Blanca, Buenos Aires, Argentina",
+        "cart_items": [
+            {
+                "id": "item-0",
+                "cart_id": "cart_abc123xyz",
+                "product_id": "prod_coffee_brazil_01",
+                "product_name": "Café de Especialidad Brasil Alfenas",
+                "product_variant": "Molido - Filtro",
+                "product_image_url": "https://buyer-app-domain.com/images/products/brasil-alfenas.png",
+                "price_at_time": 12000,
+                "quantity": 1
+            },
+            {
+                "id": "item-1",
+                "cart_id": "cart_abc123xyz",
+                "product_id": "prod_tea_earl_grey",
+                "product_name": "Té Hebras Earl Grey Premium",
+                "product_variant": null,
+                "product_image_url": null,
+                "price_at_time": 2000,
+                "quantity": 1
+            }
+        ]
+    }
+    ```
+- **Quién llama a quién:** Buyer App → Seller App
+
+
+### Obtener todas las órdenes de compra de un usuario
+- **Endpoint:** `GET /api/seller/purchase_orders?user_id={user_id}`
+- **Request:** -
+- **Response:**
+    ```json
+    {
+        "orders": [
+            {
+                "purchase_order_id": "string",
+                "user_id": "string",
+                "shopping_cart_id": "string",
+                "status": "string",
+                "created_at": "string (ISO 8601)",
+                "shipping_id": "string | null",
+                "payment_id": "string | null",
+                "payment_url": "string",
+                "shipping_cost": 0.0,
+                "currency": "ARS",
+                "address": {
+                    "street": "string",
+                    "city": "string"
+                },
+                "cart_items": [
+                    {
+                        "id": "string",
+                        "cart_id": "string",
+                        "product_id": "string",
+                        "product_name": "string",
+                        "product_variant": "string | null",
+                        "product_image_url": "string | null",
+                        "price_at_time": 0.0,
+                        "quantity": 0
+                    }
+                ]
+            }
+        ]
+    }
+    ```
+- **Quién llama a quién:** Buyer App → Seller App
+
+
+### Obtener el detalle de una orden de compra
+- **Endpoint:** `GET /api/seller/purchase_orders/{id}`
+- **Request:** -
+- **Response:**
+    ```json
+    {
+        "purchase_order_id": "string",
+        "user_id": "string",
+        "shopping_cart_id": "string",
+        "status": "string",
+        "created_at": "string (ISO 8601)",
+        "shipping_id": "string | null",
+        "payment_id": "string | null",
+        "payment_url": "string",
+        "shipping_cost": 0.0,
+        "currency": "ARS",
+        "address": {
+            "street": "string",
+            "city": "string"
+        },
+        "cart_items": [
+            {
+                "id": "string",
+                "cart_id": "string",
+                "product_id": "string",
+                "product_name": "string",
+                "product_variant": "string | null",
+                "product_image_url": "string | null",
+                "price_at_time": 0.0,
+                "quantity": 0
+            }
+        ]
     }
     ```
 - **Quién llama a quién:** Buyer App → Seller App
@@ -79,18 +207,6 @@ Documentar cada endpoint que una app expone para ser consumido por otra app del 
     ```
 - **Quién llama a quién:** Payments App → Seller App
 
-### URL de pago de la orden de compra
-- **Endpoint:** 'GET /api/seller/orders/{idOrdenCompra}/payment-url
-- **Request:** -
-- **Response:**
-```json
-    {
-        "payment_order_id": "string",
-        "checkout_url": "string"
-    }
-```
-- **Quién llama a quién:** Buyer App → Seller App
-
 ---
 
 ## Shipping App — Endpoints expuestos
@@ -101,28 +217,25 @@ Documentar cada endpoint que una app expone para ser consumido por otra app del 
     {
         "origin_postal_code": "string",
         "destination_postal_code": "string"
-    }```
+    }
+    ```
 - **Response:** Shipping App responde el costo estimado del envío calculado a partir de los dos destinos recibidos.
     ```json
     {
         "shipping_cost": 0,
         "currency": "ARS"
-    }```
+    }
+    ```
 - **Quién llama a quién:** Buyer App consume el endpoint `POST /api/shipping/cost` expuesto por Shipping App.
 
 ### Seguimiento del envío
 - **Endpoint:** `GET /api/shipping/{shipping_id}`
-- **Request:** la app que consume este endpoint envía el identificador del envío para consultar su estado actual.
-    ```json
-    {
-        "shipping_id": "string"
-    }
-    ```
+- **Request:** sin req body; {shipping_id} es suficiente.
 - **Response:** Shipping App responde el estado actual del envío junto con información básica de seguimiento.
     ```json
     {
         "shipping_id": "string",
-        "status": "pending | prepared | dispatched | in_transit | delivered | cancelled | incident",
+        "status": "CONFIRMED | PREPARING | IN_TRANSIT | ARRIVED_CITY | OUT_FOR_DELIVERY | DELIVERED | CANCELLED | WITH_ISSUE",
         "last_update": "datetime",
         "current_city": "string"
     }
@@ -133,18 +246,19 @@ Documentar cada endpoint que una app expone para ser consumido por otra app del 
 - **Endpoint:** `POST /api/shipping`
 - **Request:** la app que consume este endpoint envía los datos necesarios para crear un envío asociado a una orden.
     ```json
-    {
-        "order_id": "string",
-        "buyer_id": "string",
-        "origin_address": {
+       {
+          "order_id": "string",
+          "buyer_id": "string",
+          "seller_id": "string",
+          "origin_address": {
             "address": "string",
-            "postal_code": "string"
-        },
-        "destination_address": {
+            "postal_code": "string",
+          },
+          "destination_address": {
             "address": "string",
-            "postal_code": "string"
-        }
-    }
+            "postal_code": "string",
+          }
+       }
     ```
 - **Response:**
     ```json
@@ -153,7 +267,7 @@ Documentar cada endpoint que una app expone para ser consumido por otra app del 
         "status": "pending"
     }
     ```
-- **Quién llama a quién:** Buyer App consume este endpoint de Shipping App.
+- **Quién llama a quién:** Seller App y Buyer App consumen este endpoint de Shipping App.
 
 
 ### Actualización de estado de envío
@@ -161,7 +275,7 @@ Documentar cada endpoint que una app expone para ser consumido por otra app del 
 - **Request:** la app que consume este endpoint envía el nuevo estado del envío.
     ```json
     {
-        "status": "prepared | dispatched | delivered | cancelled | incident"
+        "status": "CONFIRMED | PREPARING | CANCELLED | WITH_ISSUE",
     }
     ```
 - **Response:**

@@ -19,7 +19,7 @@ export async function PATCH(
 ): Promise<NextResponse> {
   const { sessionClaims } = await auth();
   
-  if (sessionClaims?.metadata?.role !== "admin") {
+  if (!sessionClaims?.metadata?.roles?.includes("admin")) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 

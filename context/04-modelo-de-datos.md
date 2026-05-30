@@ -17,38 +17,43 @@ También identificar posibles duplicados entre apps (ej: usuarios) y definir có
 - name
 - last_name
 - email
+- phoneNumber    
+- roles
 - addresses
 - favourite_products (lista de productos)
 - carts (lista de carritos)
+- purchaseOrders    
 
 **Cart**
 - id
 - user_id
-- products (lista de productos)
+- status (NOT_CHECKED_OUT/CHECKED_OUT)
+- items (lista de CartItem)
 
-**Purchase Order**
+**CartItem**
 - id
-- app_id
 - cart_id
-- user_id
-- user_address
-- date/time
-- state
-- packages (lista de paquetes)
+- product_id
+- product_name
+- product_variant (detalles del producto)
+- product_image_url
+- price_at_time
+- quantity
 
-**Purchase**
-- id
-- app_id
-- cart_id
-- user_id
-- date/time
-- state
-- packages (lista de paquetes)
-- shipping_ids (uno por paquete)
-- payment_id
-- dispute_id
+**FavouriteProduct**
+- user_id          
+- product_id      
+- product_name     
+- product_image_url 
+- price           
+- location        
+- categories      
+- description     
 
----
+**FavouriteShare**
+- id    
+- user_id   
+- items (json)
 
 ## Seller App
 
@@ -136,11 +141,6 @@ Puede existir duplicación con la entidad `Product` de Buyer App
 - current_city
 - next_city/destination (podría ser misma ciudad y próximo a entrega en domicilio/punto de entrega)
 
-**ShipmentHistory**
-- id
-- shipment_id
-- visited_cities[] (current_city para todo ShipmentTracking con shipment_id=shipment_id)
-
 **User**
 - id
 - name
@@ -159,24 +159,19 @@ Puede existir duplicación con la entidad `Product` de Buyer App
 
 ### Entidades principales
 
-<!-- Describir tablas y campos -->
-**PaymentOrder:**
-- id
-- id_mercado_pago
-- source_app_order_id
-- source_app_id
-- buyer_app_id
-- buyer_id
-- amount
-- status (pending, accepted, cancelled)
-- created_at
-- updated_at
+**PaymentOrder** (`payment_order`):
+- `id`
+- `mercado_pago_id`
+- `seller_app_order_id`
+- `buyer_id`
+- `amount`
+- `status` (`pending`, `accepted`, `cancelled`)
+- `mp_status`
+- `mp_status_detail`
+- `created_at`
+- `updated_at`
 
----
-
-### Entidades principales
-
-<!-- Describir tablas y campos -->
+> **Nota:** No existe una entidad `Dispute`. Los contracargos y reembolsos se reflejan en el `mp_status` (`charged_back`, `refunded`) y se mapean al estado `cancelled`.
 
 ---
 

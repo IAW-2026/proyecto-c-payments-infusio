@@ -45,7 +45,7 @@ export async function BuyerView({ userId, page = 1 }: BuyerViewProps) {
           title="Aún no tenés compras"
           description="Cuando realices tu primera compra en Infusio, vas a poder ver acá el detalle y el estado de todos tus pagos."
           actionLabel="Explorar la Tienda"
-          actionHref={process.env.SELLER_APP_URL || "http://localhost:3001"}
+          actionHref={process.env.BUYER_APP_URL ?? ""}
         />
       </div>
     );

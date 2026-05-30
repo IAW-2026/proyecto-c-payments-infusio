@@ -28,41 +28,44 @@
     - Puede tener 0, 1 o más carritos
 - Datos de **Carrito**:
     - Tiene un idCarrito
-    - Tiene productos con cantidad especificada
-        - idProducto → Cargado por Seller App
+    - Tiene varios itemCarrito asociados (llevan el idCarrito)
     - Tiene un estado (not checked out, checked out)
-- Datos de **Orden de Compra**:
-    - Tiene un idOrdenCompra
-    - Tiene un idAppCompra
-    - Tiene un idComprador
-    - Tiene un userAddress
+- Datos de **ItemCarrito**:
+    - Tiene un idItemCarrito
     - Tiene un idCarrito
-    - Tiene una fecha/hora
-    - Tiene un estadoOrdenCompra
-    - Tiene muchos paquetes
-- Datos de **Compra**:
-    - Tiene un idCompra
-    - Tiene un idAppCompra
-    - Tiene un idComprador
-    - Tiene un idCarrito
-    - Tiene una fecha/hora
-    - Tiene uno o más idShipping 
-    - Tiene un idPago
-    - Tiene un idDisputa
-
+    - Tiene un idProducto
+    - Tiene el nombre del producto
+    - Tiene detalles del producto
+    - Tiene una imagen
+    - Tiene un precio (del momento en que se agregó al carrito)
+    - Tiene una cantidad
+- Datos de **ProductoFavorito**:
+    - Tiene un idUser           
+    - Tiene un idProduct      
+    - Tiene el nombre del producto   
+    - Tiene una imagen
+    - Tiene un precio (del momento en que se agregó a favoritos)          
+    - Tiene una ubicación (origen del producto)        
+    - Tiene una o más categorías a la que pertenece      
+    - Tiene una descripción    
+- Datos de **FavoritosCompartidos**:
+    - Tiene un idFavoritosCompartidos    
+    - Tiene un idUser   
+    - Tiene items (json)
 
 **Datos o acciones que requieren comunicación con otra app (y a través de qué API)**
 - Carrito “check out” con datos del usuario    -- sent -->     Seller App
 - Orden de compra creada                      -- received -->  Seller App
-- Consulta estado seguimiento                  -- sent -->     Shipping App
-- Solicitud detalles pago                      -- sent -->     Payments App 
+- Consulta estado seguimiento                  -- sent -->     Seller App       (se consulta a través de seller el estado que mantiene shipping)
+- Solicitud detalles pago                      -- sent -->     Payments App     
 - Pedir realizar pago                          -- sent -->     Payments App 
-- idPago                                     -- received -->   Payments App
-- idShipping                                 -- received -->   Seller App
-- Inicializar disputa                          -- sent -->     Payments App 
-- idDisputa                                  -- received -->   Payments App
-- Consultar estado disputa                     -- sent -->     Payments App
-- Solicitar producto/s                         -- sent -->     Seller App
+- idPago                                     -- received -->   Payments App     (al pedir órdenes de compra)
+- idShipping                                 -- received -->   Seller App       (al pedir órdenes de compra)
+- Inicializar disputa                          -- sent -->     Payments App     (anulado para etapa 2)
+- idDisputa                                  -- received -->   Payments App     (anulado para etapa 2)
+- Consultar estado disputa                     -- sent -->     Payments App     (anulado para etapa 2)
+- Solicitar producto/s                         -- sent -->     Seller App       
+- User desea ver detalles del envío            -- sent -->     Shipping App
 
 ### Seller App
 **Responsable:** De Giusti Camila

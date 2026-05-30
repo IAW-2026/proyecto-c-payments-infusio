@@ -12,7 +12,7 @@ export default async function PaymentDetailPage({
 }: PaymentDetailPageProps) {
   const { paymentOrderId } = await params;
   const { sessionClaims } = await auth();
-  const isAdmin = sessionClaims?.metadata?.role === "admin";
+  const isAdmin = sessionClaims?.metadata?.roles?.includes("admin") ?? false;
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">

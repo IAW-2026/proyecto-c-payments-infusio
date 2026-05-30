@@ -15,9 +15,12 @@
 7. Complete the payment with a test card.
 8. Check the terminal logs for webhook confirmation.
 
-## Clerk Test Users
-- **Admin**: (Asigned via Clerk Dashboard metadata `{"role": "admin"}`)
-- **Buyer**: `user_3DMq5QQsqVac4Fe1bmj0mhRLdel`
+## Usuarios de Clerk (compartidos con el grupo)
+
+| Rol | Email | Contraseña |
+|-----|-------|------------|
+| Administrador | admin@infusio.com | Infusio2024! |
+| Comprador | cliente@infusio.com | Infusio2024! |
 
 ## Cards
 Tarjeta

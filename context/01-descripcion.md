@@ -22,19 +22,6 @@ Para ello, se estructura en cuatro aplicaciones internas especializadas —buyer
 | Sistema interno de envíos      | Gestiona órdenes de envío, tracking y estados de entrega.                    | Shipping App                          |
 | Administrador                  | Supervisa y gestiona el funcionamiento general del sistema.                  | Todas las Apps                        |
 
-- Comprador (Buyer): Usuario final que navega el catálogo, selecciona productos y realiza compras.
-- Vendedor (Seller): Usuario encargado de publicar, gestionar y actualizar los productos disponibles en la plataforma.
-- Sistema de Pagos (Payment): Módulo responsable de procesar, validar y registrar las transacciones económicas.
-    - Comprador (pagador): Inicia el pago seleccionando un medio (tarjeta, transferencia, billetera digital, etc.).
-    - Pasarela de pago: Servicio externo que procesa la transacción, valida los datos y autoriza o rechaza el pago.
-    - Sistema interno de pagos: Registra las transacciones, gestiona estados (pendiente, aprobado, rechazado) y asegura la trazabilidad.
-- Sistema de Envíos (Shipping): Módulo encargado de gestionar la logística de entrega de los productos.
-    - Vendedor (origen): Prepara el pedido y lo pone a disposición para su despacho.
-    - Operador logístico / transportista: Servicio encargado de retirar, transportar y entregar el producto. Puede ser un proveedor externo o una flota propia.
-    - Comprador (destinatario): Recibe el producto en la ubicación indicada.
-- Sistema interno de envíos: Coordina la generación de órdenes de envío, seguimiento (tracking), estados de entrega y gestión de incidencias.
--Administrador: Usuario con permisos para supervisar y gestionar el funcionamiento general del sistema.
-
 ## Flujo principal de uso
 
 1. El comprador navega el catálogo, selecciona productos e inicia el proceso de compra desde la **Buyer App**.
