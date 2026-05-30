@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { BackButton } from "@/components/ui/back-button";
 import { PaymentDetailContent, DetailSkeleton } from "./detail-content";
 
@@ -11,8 +11,10 @@ export default async function PaymentDetailPage({
   params,
 }: PaymentDetailPageProps) {
   const { paymentOrderId } = await params;
-  const { sessionClaims } = await auth();
-  const isAdmin = sessionClaims?.metadata?.roles?.includes("admin") ?? false;
+  const { userId } = await auth();
+  const user = await currentUser();
+  const roles = (user?.publicMetadata?.roles as string[] | undefined) ?? [];
+  const isAdmin = roles.includes("admin");
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
@@ -35,7 +37,7 @@ export default async function PaymentDetailPage({
       <Suspense fallback={<DetailSkeleton />}>
         <PaymentDetailContent
           paymentOrderId={paymentOrderId}
-          userId={sessionClaims?.sub ?? null}
+          userId={userId ?? null}
           isAdmin={isAdmin}
         />
       </Suspense>

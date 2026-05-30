@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { PaymentStatus } from "@/lib/generated/prisma";
 
@@ -17,9 +17,11 @@ export async function PATCH(
   request: NextRequest,
   context: RouteContext
 ): Promise<NextResponse> {
-  const { sessionClaims } = await auth();
-  
-  if (!sessionClaims?.metadata?.roles?.includes("admin")) {
+  const { userId } = await auth();
+  const user = await currentUser();
+  const roles = (user?.publicMetadata?.roles as string[] | undefined) ?? [];
+
+  if (!roles.includes("admin")) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 

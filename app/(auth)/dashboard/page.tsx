@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { AdminView } from "@/components/dashboard/admin-view";
@@ -11,15 +11,17 @@ export default async function UnifiedDashboardPage({
 }: {
   searchParams: Promise<{ page?: string; status?: string }>;
 }) {
-  const { userId, sessionClaims } = await auth();
+  const { userId } = await auth();
   const { page: pageParam, status } = await searchParams;
   const page = parseInt(pageParam || "1", 10);
-  
+
   if (!userId) {
     redirect("/sign-in");
   }
 
-  const isAdmin = sessionClaims?.metadata?.roles?.includes("admin") ?? false;
+  const user = await currentUser();
+  const roles = (user?.publicMetadata?.roles as string[] | undefined) ?? [];
+  const isAdmin = roles.includes("admin");
 
   if (isAdmin) {
     return (
