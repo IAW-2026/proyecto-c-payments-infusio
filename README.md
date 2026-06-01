@@ -1,58 +1,67 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Ks7Ywtwc)
 # Infusio — Payments App
 
-Aplicación **Payments** del [Proyecto IAW 2026](https://iaw-2026.github.io/proyecto/) — Tipo C (Marketplace) — Red Infusio.
-
-> 🔗 **[proyecto-c-payments-infusio.vercel.app](https://proyecto-c-payments-infusio.vercel.app)**
+🔗 **Deploy de producción:** [proyecto-c-payments-infusio.vercel.app](https://proyecto-c-payments-infusio.vercel.app)
 
 ---
 
-## ¿Qué es esta app?
-
-**Infusio Payments** es el módulo de pagos del ecosistema Infusio, un marketplace de té, café e infusiones de especialidad.
-
-Se encarga de coordinar el flujo de cobro entre el vendedor, el comprador y Mercado Pago: recibe solicitudes de pago, procesa las notificaciones de Mercado Pago y actualiza el estado de las órdenes en el sistema.
-
-Incluye un **panel de administración** para gestionar y monitorear los pagos, y una **vista para el comprador** donde puede consultar el estado de sus transacciones.
-
-> [!NOTE]
-> Esta es la **Etapa 2** del proyecto. La integración con la Seller App y la Buyer App está implementada pero aún no conectada de forma completa, ya que los demás servicios del grupo se encuentran en desarrollo. La única redirección que funciona es la del checkout de Mercado Pago a la Buyer App.
-
----
-
-## Usuarios de prueba
+## Usuarios disponibles para pruebas
 
 | Rol | Email | Contraseña |
 |-----|-------|------------|
 | Administrador | admin@infusio.com | Infusio2024! |
-| Comprador | cliente@infusio.com | Infusio2024! |
-
-### Órdenes de pago pendientes para probar (Mercado Pago Sandbox)
-
-Para probar el flujo de pago con el usuario `cliente@infusio.com`, se crearon las siguientes órdenes de pago pendientes. Al hacer clic en los links e iniciar sesión con la cuenta de comprador de prueba de Mercado Pago (detallada en `TESTING.md`), se puede completar el pago:
-
-- **Orden #21:** [Iniciar Pago #21](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3382391175-ef4c2078-1876-4d9b-b0a2-f843a1053abb)
-- **Orden #23:** [Iniciar Pago #23](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3382391175-894187f1-a8bb-4fab-9302-aedece43728c)
-- **Orden #24:** [Iniciar Pago #24](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3382391175-6cc93580-1f74-4102-b314-78e3f54c1e3d)
-- **Orden #25:** [Iniciar Pago #25](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3382391175-98425fa3-08aa-4ef8-9f06-bb6cdd5bfb05)
-
-> *Nota: Para las credenciales de comprador de prueba de Mercado Pago y las tarjetas de test, revisar el archivo [TESTING.md](file:///home/lautaro/Documentos/IAW/proyecto-c-payments-infusio/TESTING.md).*
+| Comprador | buyer+clerktest@iaw.com | iawuser# |
 
 ---
 
-## Limitaciones y Flujos de Test (Mercado Pago Sandbox)
+## Instrucciones para utilizar la aplicación
 
-Al realizar pruebas en el Sandbox de Mercado Pago, pueden ocurrir los siguientes comportamientos esperados debido a las restricciones de la API externa:
+1. **Acceder al deploy** en [proyecto-c-payments-infusio.vercel.app](https://proyecto-c-payments-infusio.vercel.app).
+2. **Iniciar sesión** con alguno de los usuarios de prueba listados arriba.
+3. **Panel de Administrador:** Permite ver todas las órdenes de pago, filtrarlas por estado, y cambiar el estado manualmente (útil para simular aprobaciones en el Sandbox de Mercado Pago).
+4. **Vista de Comprador:** Permite ver las órdenes propias, su estado actual y el link de pago de Mercado Pago para las órdenes pendientes.
+5. **Flujo de pago:** Desde la vista de comprador, hacer clic en "Pagar" en una orden pendiente redirige al checkout de Mercado Pago (Sandbox). Al completar el pago con tarjeta de prueba, el webhook actualiza el estado automáticamente.
 
-1. **Simulación de Pagos Offline (Efectivo/Pendiente):**
-   - Si generás un ticket para Rapipago/Pago Fácil, la orden quedará como **Pendiente** en la app.
-   - **Por qué simular el webhook no es suficiente:** Si intentás enviar un webhook falso indicando que el pago está aprobado (a través de Postman o del simulador de Mercado Pago), la orden no cambiará a aprobada. Por seguridad, al recibir la notificación, el backend de la app consulta directamente a la API oficial de Mercado Pago para corroborar el estado real de la transacción. Si el pago sigue pendiente del lado de Mercado Pago, la app mantendrá el estado como `pending`.
-   - **Inconveniente del Sandbox:** Mercado Pago restringe la aprobación manual de transacciones de prueba mediante su API `PUT /v1/payments` si las credenciales de prueba del vendedor tienen formato de producción (`APP_USR-...`), respondiendo con error `401 Unauthorized use of live credentials`.
-   - **Solución / Alternativa:** Para testear la transición de estado a **Aprobado** (o Cancelado), iniciá sesión con el usuario de Clerk **Administrador**, navegá al detalle de la orden en el panel de control (ej. `/dashboard/payments/21`) y cambialo manualmente usando el selector de estado. Esto actualizará la orden en la base de datos de Payments y notificará la confirmación a la Seller App.
+Para más detalles sobre las tarjetas de prueba y los flujos de Sandbox, ver [TESTING.md](./TESTING.md).
 
-2. **Pagos Directos con Tarjeta:**
-   - Si elegís pagar directamente con tarjeta de crédito de prueba en el checkout, el pago se aprueba de forma automática y el webhook se dispara de inmediato en segundo plano, cambiando el estado a **Aprobado** de forma transparente.
+### Links de pago preconfigurados (Sandbox)
+
+Órdenes pendientes cargadas con el usuario `buyer+clerktest@iaw.com`. Se puede iniciar el pago directamente desde estos links:
+
+- **Orden #30** ($2500): [Iniciar Pago #30](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3382391175-797324e6-9f8f-4fb8-abe8-63a4dc103d53)
+- **Orden #31** ($1800): [Iniciar Pago #31](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3382391175-fa189c42-df2c-448d-bdaa-d289e4816d44)
+- **Orden #32** ($4200): [Iniciar Pago #32](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3382391175-83c9ba60-bdc7-4fe1-845a-4a706410bcb0)
+- **Orden #33** ($990): [Iniciar Pago #33](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3382391175-00bddc4d-cb06-4bc8-a050-ddd213a189fc)
+- **Orden #34** ($3100): [Iniciar Pago #34](https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=3382391175-76d2d5ba-75b0-4ed9-8cab-137c6d5a45c4)
 
 ---
 
-Enunciado completo: <https://iaw-2026.github.io/proyecto/>
+## Descripción del proyecto
+
+**Infusio Payments** es el módulo de pagos del ecosistema Infusio, un marketplace de té, café e infusiones de especialidad. Se encarga de coordinar el flujo de cobro entre el vendedor, el comprador y Mercado Pago: recibe solicitudes de pago desde la Seller App, procesa las notificaciones del webhook de Mercado Pago y actualiza el estado de las órdenes.
+
+La aplicación expone una API REST bajo `/api/payments/` que es consumida por las demás apps del ecosistema. Incluye un **panel de administración** para gestionar y monitorear todos los pagos, y una **vista para el comprador** donde puede consultar el estado de sus transacciones e iniciar el checkout.
+
+La autenticación está implementada con Clerk, el ORM con Prisma sobre PostgreSQL, y la integración de pagos con el SDK oficial de Mercado Pago en modo Sandbox.
+
+---
+
+## Notas para la corrección
+
+- **Sandbox de Mercado Pago:** Al simular pagos offline (efectivo/Rapipago), la orden queda como `pending`. Para simular la aprobación, usar el panel de administrador para cambiar el estado manualmente; esto también notifica a la Seller App. Los pagos con tarjeta de prueba se aprueban automáticamente vía webhook.
+- **Webhook:** El endpoint `POST /api/payments/webhook` valida la notificación consultando directamente a la API de Mercado Pago antes de actualizar el estado, lo que garantiza idempotencia y seguridad.
+- **Notificación a la Seller App:** Cuando un administrador cambia el estado de una orden manualmente, la app notifica a la Seller App del grupo mediante una llamada HTTP al endpoint correspondiente.
+- **Datos precargados:** La base de datos cuenta con órdenes en distintos estados (`pending`, `approved`, `rejected`, `cancelled`) para poder recorrer todos los casos de uso desde el primer acceso.
+
+---
+
+## API Reference
+
+Endpoints bajo `/api/payments/`. Los que se comunican entre apps usan autenticación por secreto compartido (`x-api-key` header).
+
+| Método | Endpoint | Auth | Descripción |
+|--------|----------|------|-------------|
+| `POST` | `/api/payments/charge` | `x-api-key` | Crea una orden de pago y retorna la URL de checkout de Mercado Pago |
+| `GET` | `/api/payments/status/:id` | `x-api-key` | Retorna el estado actual de una orden |
+| `PATCH` | `/api/payments/:id/status` | Clerk (admin) | Override manual de estado (`pending`, `accepted`, `cancelled`) |
+| `POST` | `/api/payments/webhook` | — | Recibe notificaciones de Mercado Pago |
