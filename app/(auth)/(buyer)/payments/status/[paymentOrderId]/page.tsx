@@ -1,0 +1,82 @@
+import { notFound } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import { translateMpStatusDetail } from "@/lib/mp-status-utils";
+import { auth } from "@clerk/nextjs/server";
+
+type PaymentStatusPageProps = {
+  params: Promise<{ paymentOrderId: string }>;
+};
+
+export default async function PaymentStatusPage({
+  params,
+}: PaymentStatusPageProps) {
+  const { paymentOrderId } = await params;
+  const { userId } = await auth();
+
+  const payment = await prisma.paymentOrder.findUnique({
+    where: { id: parseInt(paymentOrderId, 10) },
+  });
+
+  if (!payment) {
+    notFound();
+  }
+
+  // Prevent IDOR: Only allow the buyer who placed the order to view their payment status
+  if (payment.buyerId !== userId) {
+    notFound();
+  }
+
+  const statusStyles: Record<string, string> = {
+    pending: "bg-tan/30 text-brown",
+    accepted: "bg-olive/10 text-olive",
+    cancelled: "bg-red-50 text-red-600",
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto px-6 py-16">
+      <p className="text-xs uppercase tracking-[0.2em] text-olive mb-4">
+        Payment Status
+      </p>
+      <h1 className="font-brand text-3xl text-brown mb-8">Order Details</h1>
+
+      <div className="bg-white rounded-2xl border border-tan/30 p-8 shadow-sm space-y-5">
+        <div className="flex justify-between items-center pb-4 border-b border-tan/20">
+          <span className="text-sm text-brown/75">Payment Order ID</span>
+          <span className="text-sm font-mono text-brown">
+            #{payment.id}
+          </span>
+        </div>
+        <div className="flex justify-between items-center pb-4 border-b border-tan/20">
+          <span className="text-sm text-brown/75">Status</span>
+          <span
+            className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${statusStyles[payment.status] ?? statusStyles.pending}`}
+          >
+            {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
+          </span>
+        </div>
+        <div className="flex justify-between items-center pb-4 border-b border-tan/20">
+          <span className="text-sm text-brown/75">Amount</span>
+          <span className="text-lg font-semibold text-brown">
+            ${payment.amount.toFixed(2)}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-brown/75">Created</span>
+          <span className="text-sm text-brown/75">
+            {payment.createdAt.toLocaleString()}
+          </span>
+        </div>
+        {payment.mpStatusDetail && (
+          <div className="pt-4 border-t border-tan/20 space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-brown/75 block">
+              Detalle del pago
+            </span>
+            <p className="text-sm text-brown leading-relaxed bg-tan/10 rounded-xl p-3 border border-tan/20">
+              {translateMpStatusDetail(payment.mpStatusDetail)}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
