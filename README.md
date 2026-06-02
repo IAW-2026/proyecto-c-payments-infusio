@@ -10,7 +10,7 @@
 | Rol | Email | Contraseña |
 |-----|-------|------------|
 | Administrador | admin@infusio.com | Infusio2024! |
-| Comprador | buyer+clerktest@iaw.com | iawuser# |
+| Comprador | buyer+clerk_test@iaw.com | iawuser# |
 
 ---
 
