@@ -73,11 +73,6 @@ export async function AdminView({ page = 1, status }: { page?: number; status?: 
 
   return (
     <div className="space-y-12">
-      {/* Export button positioned at top right of the data section */}
-      <div className="flex justify-end -mb-8">
-        <ExportButton data={recentPayments} />
-      </div>
-
       <StatGrid stats={stats} />
 
       <BarChart label="Ingresos Globales (Últimos 6 meses)" data={monthlyRevenueData} color="accent" />
@@ -87,6 +82,7 @@ export async function AdminView({ page = 1, status }: { page?: number; status?: 
         status={status}
         totalPages={totalPages}
         currentPage={page}
+        exportButton={<ExportButton data={recentPayments} />}
       />
     </div>
   );

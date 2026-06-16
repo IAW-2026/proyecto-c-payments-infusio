@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import Link from "next/link";
 import { Eye } from "lucide-react";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -9,6 +10,7 @@ interface AdminPaymentsTableProps {
   status?: string;
   totalPages: number;
   currentPage: number;
+  exportButton?: ReactNode;
 }
 
 export function AdminPaymentsTable({
@@ -16,6 +18,7 @@ export function AdminPaymentsTable({
   status,
   totalPages,
   currentPage,
+  exportButton,
 }: AdminPaymentsTableProps) {
   const filterButtons = [
     { label: "Todos", value: undefined },
@@ -27,7 +30,10 @@ export function AdminPaymentsTable({
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between px-2 gap-4">
-        <h2 className="text-xl font-serif text-brown">Órdenes y Pagos</h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-xl font-serif text-brown">Órdenes y Pagos</h2>
+          {exportButton}
+        </div>
         <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0">
           {filterButtons.map((btn) => {
             const isActive = status === btn.value || (!status && !btn.value);
