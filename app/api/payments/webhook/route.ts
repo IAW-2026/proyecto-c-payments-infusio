@@ -109,11 +109,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       const sellerAppUrl = process.env.SELLER_APP_URL;
       if (sellerAppUrl) {
         try {
-          const response = await fetch(`${sellerAppUrl}/api/orders/${paymentOrder.sellerAppOrderId}/payment-confirmed`, {
+          const response = await fetch(`${sellerAppUrl}/api/seller/orders/${paymentOrder.sellerAppOrderId}/payment-confirmed`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "x-api-key": process.env.PAYMENTS_API_KEY || "",
+              "Authorization": `Bearer ${process.env.SELLER_API_KEY || ""}`,
             },
             body: JSON.stringify({
               payment_order_id: paymentOrder.id,
