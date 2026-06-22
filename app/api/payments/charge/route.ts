@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { validateApiKey } from "@/lib/api-auth";
+import { validateAnyServiceApiKey } from "@/lib/api-auth";
 import { prisma } from "@/lib/prisma";
 import { MercadoPagoConfig, Preference } from "mercadopago";
 
@@ -24,10 +24,10 @@ function isValidChargeBody(body: unknown): body is ChargeRequestBody {
  * POST /api/payments/charge
  *
  * Creates a new PaymentOrder and returns a checkout URL.
- * Called by Seller App with x-api-key header.
+ * Accepts both PAYMENTS_API_KEY (Seller App) and CONTROL_API_KEY (Control Panel).
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  const authError = validateApiKey(request);
+  const authError = validateAnyServiceApiKey(request);
   if (authError) return authError;
 
   let body: unknown;

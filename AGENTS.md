@@ -27,6 +27,8 @@
 - No tocar archivos de otras apps
 - Los mocks de APIs externas van en `/mocks/`
 - El webhook de Mercado Pago se recibe en `POST /api/payments/webhook`
+- CRUD para el Control Panel se expone bajo `/api/payments/orders/` con `CONTROL_API_KEY`
+- El endpoint `POST /api/payments/charge` acepta tanto `PAYMENTS_API_KEY` como `CONTROL_API_KEY`
 
 ## TypeScript
 - Tipado estricto en todo el proyecto (`strict: true` en `tsconfig.json`)

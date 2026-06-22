@@ -61,7 +61,11 @@ Endpoints bajo `/api/payments/`. Los que se comunican entre apps usan autenticac
 
 | Método | Endpoint | Auth | Descripción |
 |--------|----------|------|-------------|
-| `POST` | `/api/payments/charge` | `x-api-key` | Crea una orden de pago y retorna la URL de checkout de Mercado Pago |
+| `POST` | `/api/payments/charge` | `x-api-key` | Crea una orden de pago y retorna la URL de checkout de Mercado Pago. Acepta `PAYMENTS_API_KEY` o `CONTROL_API_KEY`. |
 | `GET` | `/api/payments/status/:id` | `x-api-key` | Retorna el estado actual de una orden |
 | `PATCH` | `/api/payments/:id/status` | Clerk (admin) | Override manual de estado (`pending`, `accepted`, `cancelled`) |
 | `POST` | `/api/payments/webhook` | — | Recibe notificaciones de Mercado Pago |
+| `GET` | `/api/payments/orders` | `x-api-key` | Lista órdenes con paginación y filtros (`page`, `limit`, `status`, `buyerId`). Auth: `CONTROL_API_KEY`. |
+| `GET` | `/api/payments/orders/:id` | `x-api-key` | Detalle completo de una orden. Auth: `CONTROL_API_KEY`. |
+| `PUT` | `/api/payments/orders/:id` | `x-api-key` | Actualiza campos de una orden. Auth: `CONTROL_API_KEY`. |
+| `DELETE` | `/api/payments/orders/:id` | `x-api-key` | Elimina una orden. Auth: `CONTROL_API_KEY`. |

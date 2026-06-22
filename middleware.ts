@@ -13,8 +13,8 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Skip Next.js internals, static files, root landing page (/), and public webhook/charge/status endpoints
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)|$|api/payments/webhook|api/payments/charge|api/payments/status/).*)",
+    // Skip Next.js internals, static files, root landing page (/), and public API endpoints
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)|$|api/payments/webhook|api/payments/charge|api/payments/status/|api/payments/orders).*)",
   ],
 };
 
