@@ -1,0 +1,20 @@
+# Infusio Payments App
+
+> Módulo de pagos del ecosistema Infusio, un marketplace de té, café e infusiones de especialidad. Proyecto académico — IAW 2026, Universidad Nacional del Sur.
+
+## ¿Qué hace esta app?
+
+Infusio Payments coordina el flujo de cobro entre vendedores, compradores y Mercado Pago dentro del ecosistema Infusio. Recibe solicitudes de pago, procesa notificaciones de Mercado Pago vía webhook y actualiza el estado de las órdenes.
+
+- Panel de administración para gestionar y monitorear pagos
+- Vista de comprador para consultar el historial de transacciones
+- Integración con Mercado Pago Checkout Pro (modo Sandbox)
+- Autenticación compartida con todo el ecosistema vía Clerk
+
+## Stack
+
+Next.js 16 (App Router), Prisma, PostgreSQL, Clerk, Mercado Pago SDK v2, Tailwind CSS, Vercel.
+
+## Páginas públicas
+
+- [Inicio](https://proyecto-c-payments-infusio.vercel.app/)
